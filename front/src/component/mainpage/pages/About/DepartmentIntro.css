@@ -1,0 +1,219 @@
+.department-intro {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.department-intro h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.tab-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button.active {
+    border-bottom: 2px solid #0066cc;
+    color: #0066cc;
+}
+
+.tab-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #0066cc;
+    margin-bottom: 15px;
+}
+
+h4 {
+    color: #292670;
+    margin: 0 0 20px 0;
+}
+
+p, ul {
+    line-height: 1.6;
+    color: #444;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+/* 부서소개 탭 스타일 */
+.intro-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.intro-table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.intro-table td {
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.intro-table tr:first-child {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.intro-table h4 {
+    color: #292670;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.label-cell {
+    width: 150px;
+    font-size: 18px;
+    line-height: 30px;
+    padding: 32px 20px;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: top;
+}
+
+.content-cell {
+    display: table-cell;
+    padding: 35px 15px;
+    font-size: 14px;
+    line-height: 24px;
+    word-break: keep-all;
+    vertical-align: top;
+}
+
+.content-cell ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.content-cell ul li {
+    color: gray;
+}
+  
+.content-cell ul li::before {
+    content: "- ";
+}
+  
+/* 담당업무 탭 스타일 */
+.duties-content h4 {
+    margin-bottom: 20px;
+}
+
+.duties-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-top: 2px solid #e0e0e0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.duties-table th .duties-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    text-align: left;
+}
+
+.duties-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.duties-table tr:first-child {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.duties-table th:nth-child(1) {
+    width: 15%;
+}
+.duties-table th:nth-child(2) {
+    width: 15%;
+}
+.duties-table th:nth-child(3) {
+    width: 30%;
+}
+.duties-table th:nth-child(4) {
+    width: 20%;
+}
+.duties-table th:nth-child(5) {
+    width: 20%;
+}
+
+/* 오시는 길 탭 스타일 */
+  .location-content h4 {
+    margin-bottom: 20px;
+}
+
+.map-container {
+    margin-bottom: 20px;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.address,
+  .phone {
+    flex: 1;
+}
+
+@media (max-width: 600px) {
+    .tab-bar {
+      flex-direction: column;
+    }
+
+    .tab-button {
+      width: 100%;
+      text-align: left;
+      padding: 10px;
+    }
+
+    .label-cell, .content-cell {
+      display: block;
+      width: 100%;
+      padding: 15px;
+    }
+
+    .duties-table {
+      font-size: 12px;
+    }
+
+    .duties-table th, .duties-table td {
+      padding: 5px;
+    }
+
+    .contact-info {
+      flex-direction: column;
+    }
+
+    .address, .phone {
+      margin-bottom: 10px;
+    }
+}

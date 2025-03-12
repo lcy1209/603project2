@@ -1,0 +1,26 @@
+.common-button-container {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.common-button-container button {
+    padding: 8px 20px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: #003875;
+    color: white;
+}
+
+.common-button-container button:hover {
+    background-color: #002855;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .common-button-container button {
+        padding: 5px;
+        font-size: 0.8rem;
+    }
+}

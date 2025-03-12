@@ -1,0 +1,81 @@
+/* 사이드바 기본 스타일 */
+.mysidebar {
+    width: 25%;
+    border-right: 1px solid #ddd;
+    padding: 40px;
+    margin-top: 0;
+
+}
+
+/* 사이드바 제목 스타일 */
+.mysidebar h3 {
+    font-size: 25px;
+    margin-top: auto;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* 구분선 */
+.mysidebar .mysidebar-division-line {
+    border-top: 3px solid #444444;
+    margin: 10px -10px;
+}
+
+/* 리스트 스타일 */
+.mysidebar ul {
+    list-style: none;
+    padding: 10px;
+}
+ 
+.mysidebar ul li {
+    margin-bottom: 10px;
+    line-height: 3;
+}
+
+/* 링크 기본 스타일 */
+.mysidebar ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    font-size: 20px;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+/* 호버 시 밑줄 애니메이션 */
+.mysidebar ul li a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: 0;
+    height: 3px;
+    background-color: rgb(1, 66, 122);
+    transition: width 0.1s ease, left 0.1s ease;
+}
+
+.mysidebar ul li a:hover {
+    color: rgb(1, 66, 122); /* 글자 색 변경 */
+}
+
+/* 호버 시 밑줄이 나타남 */
+.mysidebar ul li a:hover::after {
+    width: 100%;
+    left: 0;
+    background-color: rgb(1, 66, 122); /* 밑줄 색 변경 */
+}
+
+/* 현재 페이지의 메뉴 강조 (밑줄 없이 글자 색만 변경) */
+.mysidebar ul li a.active {
+    color: rgb(1, 66, 122);
+    font-weight: bold;
+    position: relative;
+}
+
+/* 현재 페이지일 때 밑줄 숨기기 */
+.mysidebar ul li a.active::after {
+    content: none; /* 밑줄 제거 */
+}
+
+

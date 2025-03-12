@@ -1,0 +1,351 @@
+/* 전체 레이아웃 */
+.board-list.campus {
+  width: 80%;
+  margin: 50px auto;
+  font-family: 'Arial', sans-serif;
+}
+
+.b-container.campus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 제목 스타일 */
+.bpage-title.campus h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 검색 영역 */
+.bsearch-wrap.campus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.bsearch-wrap.campus select, 
+.bsearch-wrap.campus input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.bsearch-wrap.campus button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bsearch-wrap.campus button:hover {
+  background-color: #0056b3;
+}
+
+/* 게시글 개수 */
+.b-count_content.campus {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* 테이블 스타일 */
+.b-table.campus {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.b-table.campus th, .b-table.campus td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.b-table.campus th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.b-table.campus td {
+  background-color: #fff;
+}
+
+/* 제목 컬럼 클릭 가능하도록 */
+.b-table.campus .th-title {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.b-table.campus .th-title:hover {
+  text-decoration: underline;
+}
+
+/* 페이지네이션 스타일 */
+.pagination.campus {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination.campus button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #007bff;
+  background-color: white;
+  color: #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination.campus button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination.campus .active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* 📌 페이지네이션 스타일 */
+.board_pagination.campus {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.boardpage-item.campus {
+  margin: 0 5px;
+}
+
+.boardpage-link.campus {
+  padding: 8px 12px;
+  border: 1px solid #007bff;
+  background-color: white;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.boardpage-link.campus:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* 📌 현재 페이지 스타일 */
+.boardpage-item.campus .boardpage-link.active {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: default;
+}
+
+/* 📌 좌우 이동 버튼 스타일 */
+.boardpage-link.campus:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 📌 작성하기 버튼 스타일 */
+.write-btn.campus {
+  margin-left: 10px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.write-btn.campus:hover {
+  background-color: #218838;
+}
+
+/* 📌 게시글 작성 페이지 스타일 */
+.board-write-container.campus {
+  width: 50%;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.board-write-container.campus h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.board-form.campus {
+  display: flex;
+  flex-direction: column;
+}
+
+.board-form.campus label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.board-form.campus input,
+.board-form.campus textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.board-form.campus textarea {
+  height: 150px;
+  resize: none;
+}
+
+.board-form.campus input[type="file"] {
+  border: none;
+  background: none;
+}
+
+.board-btn-group.campus {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-submit.campus {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-submit.campus:hover {
+  background: #0056b3;
+}
+
+.btn-cancel.campus {
+  padding: 10px 20px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancel.campus:hover {
+  background: #a71d2a;
+}
+
+/* 📌 상세 페이지 컨테이너 */
+.board-detail-container.campus {
+  width: 60%;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.board-title.campus {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 작성자, 날짜, 조회수 스타일 */
+.board-info.campus {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* 본문 스타일 */
+.board-content.campus {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* 첨부 이미지 스타일 */
+.board-images.campus {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.board-img.campus {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+/* 버튼 스타일 */
+.board-buttons.campus {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-back.campus {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-back.campus:hover {
+  background: #0056b3;
+}
+
+/* 📌 이미지 컨테이너 */
+.board-images-container.campus {
+  display: flex;  /* Flexbox 사용 */
+  justify-content: center;  /* 수평 가운데 정렬 */
+  align-items: center;  /* 수직 가운데 정렬 */
+  margin-top: 20px;  /* 위쪽 여백 추가 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 📌 이미지 크기 조정 */
+.board-img.campus {
+  max-width: 100%;  /* 화면 너비에 맞게 조정 */
+  max-height: 500px;  /* 최대 높이 제한 */
+  width: auto;  /* 비율 유지 */
+  height: auto;  /* 비율 유지 */
+  border-radius: 10px;  /* 둥근 모서리 적용 */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* 삭제하기 버튼 스타일 */
+.btn-delete.campus {
+  padding: 10px 20px;
+  background: #dc3545; /* 빨간색 배경 */
+  color: white;
+  border: none;
+}

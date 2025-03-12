@@ -1,0 +1,390 @@
+/* 전체 레이아웃 */
+.board-list {
+    width: 80%;
+    margin: 50px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.b-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 제목 스타일 */
+.bpage-title h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 검색 영역 */
+.bsearch-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.bsearch-wrap select, 
+.bsearch-wrap input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.bsearch-wrap button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bsearch-wrap button:hover {
+    background-color: #0056b3;
+}
+
+/* 게시글 개수 */
+.b-count_content {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* 테이블 스타일 */
+.b-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.b-table th, .b-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.b-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.b-table td {
+    background-color: #fff;
+}
+
+/* 제목 컬럼 클릭 가능하도록 */
+.b-table .th-title {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.b-table .th-title:hover {
+    text-decoration: underline;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .active {
+    background-color: #007bff;
+    color: white;
+}
+/* 📌 페이지네이션 스타일 */
+.board_pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+/*페이지네이션 버튼 간격*/
+.boardpage-item {
+    margin: 0 5px;
+}
+
+.boardpage-link {
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.boardpage-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 📌 현재 페이지 스타일 */
+.boardpage-item .boardpage-link.active {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: default;
+}
+
+/* 📌 좌우 이동 버튼 스타일 */
+.boardpage-link:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 📌 작성하기 버튼 스타일 */
+.write-btn {
+    margin-left: 10px;
+    padding: 10px 15px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.write-btn:hover {
+    background-color: #218838;
+}
+
+/* 📌 게시글 작성 페이지 스타일 */
+.board-write-container {
+    width: 50%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.board-write-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.board-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.board-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.board-form input,
+.board-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.board-form textarea {
+    height: 150px;
+    resize: none;
+}
+
+.board-form input[type="file"] {
+    border: none;
+    background: none;
+}
+
+.board-btn-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-submit {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #0056b3;
+}
+
+.btn-cancel {
+    padding: 10px 20px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background: #a71d2a;
+}
+
+
+/* 📌 상세 페이지 컨테이너 */
+.board-detail-container {
+    width: 60%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.board-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 작성자, 날짜, 조회수 스타일 */
+.board-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* 본문 스타일 */
+.board-content {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    font-size: 16px;
+    line-height: 1.6;
+    white-space: pre-wrap;       /* 줄바꿈과 공백 유지 */
+    word-wrap: break-word;       /* 긴 단어가 넘칠 경우 줄바꿈 */
+}
+
+/* 첨부 이미지 스타일 */
+.board-images {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.board-img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* 버튼 스타일 */
+.board-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-back {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-back:hover {
+    background: #0056b3;
+}
+
+
+/* 📌 이미지 컨테이너 */
+.board-images-container {
+    display: flex;  /* Flexbox 사용 */
+    justify-content: center;  /* 수평 가운데 정렬 */
+    align-items: center;  /* 수직 가운데 정렬 */
+    margin-top: 20px;  /* 위쪽 여백 추가 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 📌 이미지 크기 조정 */
+.board-img {
+    max-width: 100%;  /* 화면 너비에 맞게 조정 */
+    width: auto;  /* 비율 유지 */
+    height: auto;  /* 비율 유지 */
+    border-radius: 10px;  /* 둥근 모서리 적용 */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* 삭제하기 버튼 스타일 */
+.btn-delete {
+    padding: 10px 20px;
+    background: #dc3545; /* 빨간색 배경 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* 버튼 간격 */
+}
+
+.btn-delete:hover {
+    background: #c82333; /* 어두운 빨간색 배경 */
+}
+
+/* 수정하기 버튼 스타일 */
+.btn-edit {
+    padding: 10px 20px;
+    background: #28a745; /* 초록색 배경 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 15px; /* 버튼 간격 */
+}
+
+.btn-edit:hover {
+    background: #218838; /* 어두운 초록색 배경 */
+}
+
+
+.board-with-sidebar {
+    display: flex; /* 사이드바와 게시판을 나란히 배치 */
+}
+
+.recruitment-sidebar-fixed {
+    width: 250px; /* 사이드바의 고정 너비 */
+}
+
+.board-content-area {
+    flex-grow: 1; /* 남은 공간을 차지 */
+    padding: 20px; /* 여백 추가 */
+    margin-left: 150px; /* 사이드바와의 간격 */ 
+}

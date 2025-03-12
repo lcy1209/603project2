@@ -1,0 +1,117 @@
+.chat-room {
+    max-width: 800px;
+    min-height: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.chat-header h2 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.chat-messages {
+    height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.message.mine {
+    text-align: end;
+    align-self: flex-end;
+    color: #333;
+}
+
+.message.other {
+    align-self: flex-start;
+    color: #333;
+}
+
+/* 메시지 텍스트의 배경색과 여백 조정 */
+.message.mine > .message-color,
+.message.other > .message-color {
+    padding: 10px; /* 텍스트와 배경 사이 여백 */
+    display: inline-block; /* 배경이 텍스트 크기에 맞게 조정 */
+    border-radius: 8px; /* 둥근 모서리 */
+}
+
+.message.mine > .message-color {
+    background-color: #FFF064;
+}
+
+.message.other > .message-color {
+    background-color: #C1FF6B;
+}
+
+.sender {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 0.85rem;
+}
+
+
+.message-form {
+    display: flex;
+    gap: 10px;
+}
+
+.message-form input {
+    flex: 7;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.message-form button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in;
+}
+
+.message-form button:hover {
+    background-color: #2980b9;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .message-form button {
+        padding: 5px;
+        font-size: 0.8rem;
+    }
+}

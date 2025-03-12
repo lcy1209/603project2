@@ -1,0 +1,61 @@
+.banner-management {
+    padding: 20px;
+}
+
+.banner-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.banner-form input[type="file"], .banner-form input[type="text"] {
+    padding: 5px;
+}
+
+.banner-form button {
+    padding: 5px 10px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.banner-form button:hover {
+    background-color: #0052a3;
+}
+
+.banner-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.banner-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.banner-item img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.banner-item p {
+    margin-bottom: 10px;
+}
+
+.banner-item button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.banner-item button:hover {
+    background-color: #c82333;
+}  

@@ -1,0 +1,164 @@
+.community-container {
+    display: flex;
+}
+
+.board-left-side {
+    flex: 2;
+}
+
+.board-right-side {
+    flex: 2;
+}
+
+.common-board-container {
+    flex: 6;
+    min-width: 1000px;
+    justify-content: center;
+    margin: 10vh 0;
+    min-height: 500px;
+    white-space: pre-line;
+}
+
+.common-board-container>h1 {
+    text-align: left;
+    font-size: 40px;
+}
+
+.board-top-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.board-top-box>.select-sort-order>select {
+    height: 4vh;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.common-board-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.common-board-table>thead>tr {
+    background-color: #f8f9fa;
+    border-top: 2px solid #333;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.common-board-table>thead>tr>th {
+    padding: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.common-board-table>tbody>tr {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.common-board-table>tbody>tr>td {
+    padding: 12px;
+    white-space: nowrap;
+    /* 텍스트가 줄바꿈되지 않도록 설정 */
+    overflow: hidden;
+    /* 셀 크기를 넘어가는 내용을 숨김 */
+}
+
+.common-board-table>tbody>tr>td:nth-child(2) {
+    width: 50%;
+    text-align: left;
+}
+
+.board-top-box>button {
+    flex: none;
+    padding: 8px 15px;
+    background-color: #003875;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* 제목 길이 제한 */
+.common-board-title {
+    display: inline-block;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+/* 온라인 상답 게시판 답변완료 */
+.board-answered {
+    display: inline-block;
+    /* 인라인 요소지만 블록 속성도 가지게 함 */
+    color: #2196F3;
+    /* 텍스트 색상 설정 */
+    margin-left: 5px;
+    /* 왼쪽 여백 설정 */
+    font-weight: bold;
+    /* 글자 굵기 설정 */
+    vertical-align: middle;
+    /* 수직 가운데 정렬 */
+    cursor: pointer;
+}
+
+
+/* 모바일 반응형 스타일 */
+@media screen and (max-width: 768px) {
+    .community-container {
+        flex-direction: column;
+        /* 세로로 쌓기 */
+    }
+
+    .board-left-side,
+    .board-right-side {
+        width: 100%;
+        /* 전체 너비 사용 */
+        margin-bottom: 20px;
+        /* 하단 간격 추가 */
+    }
+
+    .common-board-container {
+        margin-top: 5vh;
+        /* 상단 여백 축소 */
+        min-width: 200px;
+        padding-left: 10 px;
+        padding-right: 10 px;
+    }
+
+    .common-board-container h1 {
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .board-top-box {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        font-size: 0.7rem;
+    }
+
+    .board-top-box p {
+        display: none;
+    }
+
+    .common-board-container > p {
+        font-size: 0.8rem;
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .common-board-table {
+        font-size: 0.7rem;
+    }
+}

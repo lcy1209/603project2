@@ -1,0 +1,66 @@
+.common-detail-board-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.common-detail-board-container table {
+    width: 100%;
+    border-top: 2px solid #333;
+    border-collapse: collapse;
+}
+
+.common-detail-board-container tr:nth-child(4),
+.common-detail-board-container tr:nth-child(8) {  
+    height: 500px;
+    vertical-align: top;  /* 내용을 상단에서 시작 */
+    white-space: pre-wrap;  /* 줄바꿈 유지 */
+}
+
+.common-detail-board-container th {
+    width: 100px;
+    background-color: #f8f8f8;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.common-detail-board-container td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.common-detail-board-container td span {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.common-detail-board-container > .answer-text {
+    white-space: pre-wrap;
+}
+
+@media screen and (max-width:768px) {
+
+    .common-detail-board-container {
+        width: 90%;
+        margin: 20px auto;
+        padding: 0;
+    }
+
+    .common-detail-board-container table {
+        margin: 0 auto;
+        font-size: 0.8rem;
+    }
+
+    .common-detail-board-container th {
+        width: 25%;
+    }
+
+    .common-detail-board-container td {
+        width: 75%;
+    }
+}
+
+

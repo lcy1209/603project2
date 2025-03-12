@@ -1,0 +1,61 @@
+.header-bar {
+    position: fixed; /* 헤더를 고정 */
+    top: 0; /* 상단에 위치 */
+    left: 0; /* 왼쪽에 위치 */
+    width: 100%; /* 전체 너비 */
+    height: 60px; /* 헤더 높이 */
+    background-color: #343a40; /* 헤더 배경색 */
+    color: white; /* 텍스트 색상 */
+    display: flex; /* 플렉스 박스 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 0 20px; /* 좌우 패딩 */
+    z-index: 1000; /* 사이드바보다 위에 표시되도록 z-index 설정 */
+}
+
+nav {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    position: relative; /* 서브 메뉴의 위치를 상대적으로 설정 */
+}
+
+.submenu {
+    display: flex;
+    flex-direction: column; /* 세로로 나열 */
+    margin-top: 10px; /* 버튼과 서브 메뉴 사이의 간격 */
+}
+
+.submenu .btn {
+    margin: 5px 0; /* 각 링크 사이의 간격 */
+}
+
+.submenu.visible {
+    display: flex; /* 보이게 할 때 */
+}
+
+.submenu a {
+    display: block; /* 링크를 블록 요소로 설정하여 세로로 나열 */
+    margin: 5px 0; /* 링크 간의 간격 */
+    padding: 10px; /* 패딩 추가 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    background-color: #007bff; /* 버튼 배경색 */
+    color: white; /* 버튼 텍스트 색상 */
+    border-radius: 4px; /* 버튼 모서리 둥글게 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+}
+
+.submenu a:hover {
+    background-color: #0056b3; /* 호버 시 배경색 변경 */
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    position: fixed; /* 사이드바를 고정 */
+    top: 60px; /* 헤더 아래에 위치 (헤더 높이에 따라 조정) */
+    left: 0; /* 왼쪽에 위치 */
+    width: 200px; /* 사이드바 너비 */
+    height: calc(100% - 60px); /* 전체 높이에서 헤더 높이만큼 빼기 */
+    background-color: #f8f9fa; /* 사이드바 배경색 */
+    padding: 20px; /* 패딩 추가 */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* 사이드바 그림자 추가 */
+}
+

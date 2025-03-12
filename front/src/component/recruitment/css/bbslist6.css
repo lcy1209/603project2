@@ -1,0 +1,28 @@
+.underline:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.board-name {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px; /* 둥근 모서리 */
+    background-color: #f0f0f0; /* 배경색 */
+    margin-left: 10px; /* 버튼과의 간격 */
+    font-weight: bold; /* 글씨 두껍게 */
+}
+.table {
+    border-collapse: separate; /* border-spacing을 사용하기 위해 설정 */
+    border-spacing: 10px; /* 열 간격 조정 */
+  }
+  
+  .table th, .table td {
+    padding: 10px; /* 셀 내부 여백 조정 */
+  }
+  
+  .table th.col-1 {
+    width: 50px; /* 첫 번째 열의 너비 설정 */
+  }
+  
+  .table th.col-3 {
+    width: 100px; /* 세 번째 열의 너비 설정 */
+  }

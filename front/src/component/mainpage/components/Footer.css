@@ -1,0 +1,84 @@
+.footer {
+  background-color: #1f2937;
+  color: #ffffff;
+  margin-top: auto;
+  position: relative;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;       /* 텍스트를 한 줄로 표시 */
+  overflow: hidden;          /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis;   /* 말줄임표(...) 추가 */
+}
+
+.footer-link:hover {
+  color: #60a5fa;
+}
+
+.footer-info {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.footer-logo {
+  max-width: 130px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.footer-text {
+  font-size: 0.875rem;
+}
+
+.scroll-to-top {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-to-top:hover {
+  background-color: #2563eb;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+  .footer-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 530px) {
+  .footer-link {
+    font-size: 14.5px;
+  }
+}

@@ -1,0 +1,225 @@
+/* 전체 레이아웃 */
+body.myprogram-page {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.myprogram-container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* 메인 섹션 */
+.myprogram-main {
+    display: flex;
+    gap: 30px;
+}
+
+/* 폼 스타일 */
+.myprogram-form-container {
+    width: 75%;
+    padding: 20px;
+}
+
+.myprogram-form-container h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.myprogram-form-container .myprogram-division-line {
+    border-top: 3px solid #444444;
+    margin: 10px -25px;
+}
+
+.myprogram-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+/* 테이블 스타일 */
+.myprogram-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-left: none;
+    border-right: none;
+}
+
+.myprogram-table th,
+.myprogram-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 16px;
+    vertical-align: middle;
+    font-weight: 500;
+    border-top: 1px solid #ddd;  /* 위쪽 선 유지 */
+    border-bottom: 1px solid #ddd; /* 아래쪽 선 유지 */
+    border-left: none; /* 좌측 선 제거 */
+    border-right: 1px solid #ddd; /* 가운데 선 유지 */
+}
+
+/* 마지막 열의 우측 선 제거 */
+.myprogram-table th:last-child,
+.myprogram-table td:last-child {
+    border-right: none;
+}
+
+.myprogram-table th {
+    background-color: #f4f4f4;
+    font-size: 17px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.myprogram-table tbody tr:hover {
+    background-color: #edf7f8; 
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+
+    .myprogram-table th,
+    .myprogram-table td {
+        font-size: 12px;
+        padding: 8px;
+        text-align: center;
+    }
+}
+
+/* 페이지네이션 */
+.myprogram-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.myprogram-pagination button {
+    cursor: pointer;
+    padding: 5px 15px;
+    border: none;
+    font-size: 15px;
+    position: relative;
+    color: #333;
+    margin-right: 5px;
+}
+
+.myprogram-pagination button.active::after,
+.myprogram-pagination button:hover::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: rgb(1, 66, 122);
+    border-radius: 2px;
+}
+
+.myprogram-pagination button.active {
+    font-weight: bold;
+    color: black;
+}
+
+.myprogram-pagination button:hover {
+    color: black;
+}
+
+/* 즐겨찾기 해제 시 왼쪽으로 부드럽게 사라짐 */
+.fade-out-left {
+    animation: fadeOutLeft 0.5s ease forwards;
+}
+
+@keyframes fadeOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+}
+
+/* 프로그램 데이터 없을 시 안내 문구 */
+.no-data-message {
+    text-align: center;
+    color: gray;
+    font-size: 15px;
+    padding: 20px;
+    font-weight: 400;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* 아이콘과 텍스트 간격 */
+}
+
+/* 검색결과 없을 시 아이콘 */
+.no-data-icon {
+    width: 50px; /* 아이콘 크기 */
+    height: 50px;
+    color: gray;
+}
+
+.myprogram-actions {
+    display: flex;
+    justify-content: flex-end; /* 우측 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 16px; /* 요소 간 간격 조정 */
+}
+
+/* 검색바*/ 
+/* 검색바 전체 영역 */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: white;
+    border-radius: 30px;
+    border: 3px solid rgb(1, 66, 122);
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 1px;
+}
+
+/* 검색어 입력 */
+.search-input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 1px;
+    outline: none;
+    border-radius: 30px;
+    margin-left: 20px;
+}
+
+/* 돋보기 아이콘 */
+.search-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(1, 66, 122);
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+

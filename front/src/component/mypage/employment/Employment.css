@@ -1,0 +1,262 @@
+/* 탭 스타일 */
+.emp-tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.emp-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    background-color: #f4f4f4;
+    margin-right: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.emp-tab.active {
+    background-color: rgb(1, 66, 122);
+    color: white;
+    border-bottom: 2px solid rgb(1, 66, 122);
+}
+
+.emp-tab:hover {
+    background-color: rgb(1, 66, 122);
+    color: white;
+}
+
+.emp-main {
+    display: flex;
+    gap: 30px;
+}
+
+.emp-container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.emp-container .emp-division-line {
+    border-top: 3px solid #444444;
+    margin: 10px -25px;
+}
+
+.emp-form-container {
+    width: 75%;
+    padding: 20px;
+}
+
+.emp-form-container h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* 탭 콘텐츠 스타일 */
+.emp-tab-content {
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 테이블 스타일 */
+.emp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+   margin-bottom: 20px;
+}
+
+.emp-table th,
+.emp-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 16px;
+    vertical-align: middle; /* 수직 가운데 정렬 */
+    font-weight: 500;
+    border-top: 1px solid #ddd; /* 위쪽 선 유지 */
+    border-bottom: 1px solid #ddd; /* 아래쪽 선 유지 */
+    border-left: none; /* 좌측 선 제거 */
+    border-right: 1px solid #ddd; /* 가운데 선 유지 */
+}
+
+/* 마지막 열의 우측 선 제거 */
+.emp-table th:last-child,
+.emp-table td:last-child {
+    border-right: none;
+}
+
+.emp-table th {
+    background-color: #f4f4f4;
+    font-size: 17px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .emp-table th,
+    .emp-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .emp-tab {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+/* 페이지네이션 */
+.emp-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.emp-pagination button {
+    cursor: pointer;
+    padding: 5px 15px;
+    border: none;
+    font-size: 15px;
+    position: relative;
+    color: #333;
+    margin-right: 5px;
+}
+
+.emp-pagination button.active::after,
+.emp-pagination button:hover::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: rgb(1, 66, 122); 
+     border-radius: 2px;  
+}
+
+.emp-pagination button.active {
+    font-weight: bold;
+    color: black;
+}
+
+.emp-pagination button:hover {
+    color: black;
+}
+
+/* 마감 상태 깜박이는 애니메이션 */
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.blinking-check {
+    animation: blink 2s infinite;
+    display: inline-block;
+}
+
+/* 즐겨찾기 부드럽게 왼쪽으로 삭제되는 애니메이션 */
+.fade-out-left {
+    animation: fadeOutLeft 0.5s ease forwards;
+}
+
+@keyframes fadeOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+}
+
+/* 마감된 항목 회색 표시 */
+.gray-text {
+    color: gray;
+}
+
+/* 마감상태 표시 */
+.emp-getDeadlineStatus {
+    text-align: right;
+    word-spacing: 10px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* 채용 데이터 없을 시, 검색결과 없을 시 안내 문구 */
+.no-data-message {
+    text-align: center;
+    color: gray;
+    font-size: 15px;
+    padding: 20px;
+    font-weight: 400;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* 아이콘과 텍스트 간격 */
+}
+
+/* 검색결과 없을 시 아이콘 */
+.no-data-icon {
+    width: 50px; /* 아이콘 크기 */
+    height: 50px;
+    color: gray;
+}
+
+/* 검색 입력창 */
+.emp-search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.emp-search-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px; /* 오른쪽 여백 추가 */
+    margin: 10px 0;
+    border: 3px solid rgb(1, 66, 122);
+    border-radius: 20px;
+    font-size: 14px;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.emp-search-input:focus {
+    border:3px solid  rgb(1, 66, 122); 
+    background-color:rgb(236, 245, 253);  /* 연한 파란색 배경 추가 (선택사항) */
+    outline: none; /* 기본 아웃라인 제거 */
+
+}
+
+/* 검색 아이콘 */
+.emp-search-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: rgb(1, 66, 122);
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+

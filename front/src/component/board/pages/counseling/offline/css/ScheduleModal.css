@@ -1,0 +1,73 @@
+.schedule-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.schedule-modal-content {
+    margin-top: 20px;
+}
+
+.schedule-modal-input-group {
+    margin-bottom: 20px;
+}
+
+.schedule-modal-input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.schedule-modal-input-group input,
+.schedule-modal-input-group select,
+.schedule-modal-date-picker {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.schedule-modal-button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.schedule-modal-submit-button,
+.schedule-modal-cancel-button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.schedule-modal-submit-button {
+    background-color: #003875;
+    color: white;
+}
+
+.schedule-modal-cancel-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+.schedule-modal-submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

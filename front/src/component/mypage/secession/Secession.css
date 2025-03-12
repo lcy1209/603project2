@@ -1,0 +1,140 @@
+/* Secession 페이지 전체 레이아웃 */
+body.secession-page {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.secession-container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* 메인 섹션 */
+.secession-main {
+    display: flex;
+    gap: 30px;
+}
+
+/* 폼 스타일 */rm-conta
+.secession-form-container {
+    width: 75%;
+    padding: 20px;
+}
+
+.secession-form-container h1 {
+    font-size:30px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.secession-form-container .secession-division-line {
+    border-top: 3px solid #444444;
+    margin: 10px -25px;
+}
+
+.secession-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin: 50px auto;
+}
+
+.secession-form-container .secession-text {
+    text-align: center;
+    line-height: 2;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.secession-form-container .secession-line {
+    border-top: 2px solid #4444;
+    margin: 30px -10px;
+}
+
+.secession-form-container input[type="password"] {
+    padding: 10px;
+    font-size: 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    margin: auto;
+}
+
+.secession-form-container input[type="password"]:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+    
+}
+
+/* 버튼 스타일 */
+.secession-form-container button {
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: rgb(1, 66, 122);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 15%;
+    margin: 30px auto;
+}
+
+.secession-form-container secession-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* 비밀번호 입력 컨테이너 */
+.password-container {
+    position: relative;
+    width: 60%;
+    margin: auto;
+}
+
+.password-container .password-input {
+    width: 100%; /* 입력 칸의 크기 100% 유지 */
+    padding-right: 40px; /* 눈 모양 버튼 공간 확보 */
+    font-size: 18px; /* 입력 칸 글씨 크기 */
+    padding: 10px; /* 입력 칸 여백 */
+    border: 1px solid #ddd;
+    border-radius: 10px; /* 둥근 모서리 유지 */
+    box-sizing: border-box;
+}
+
+.password-container .password-input:focus {
+    border-color: rgb(1, 66, 122); /* 포커스 시 테두리 색상 변경 */
+    outline: none; /* 외곽선 제거 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); /* 포커스 시 그림자 */
+}
+
+/* 눈 모양 토글 버튼 */
+.password-container .toggle-password {
+    position: absolute;
+    top: 50%; /* 중앙 정렬 */
+    right: 0px; /*오른쪽 끝에 배치*/
+    transform: translateY(-50%);
+    background: none; /* 배경 제거 */
+    border: none; /* 테두리 제거 */
+    cursor: pointer; /* 클릭 가능한 커서 */
+    font-size: 18px;
+    color: #333; /* 텍스트 색상 */
+    padding: 0;
+    margin: 0;
+    outline: none; /* 포커스 시 외곽선 제거 */
+    appearance: none; /* 브라우저 기본 스타일 제거 */
+}
+
+.password-container .toggle-password:focus {
+    outline: none; /* 포커스 상태에서도 테두리 제거 */
+}

@@ -1,0 +1,81 @@
+/* ✅ 사이드바 블록 컨테이너 */
+.program-sidebar-container {
+  position: fixed;
+  top: 160px;
+  left: 40px;
+  width: 210px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ✅ 사이드바 내부 스타일 */
+.program-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ✅ 사이드바 제목 */
+.program-sidebar-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+/* ✅ 메뉴 목록 */
+.program-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.program-sidebar ul li {
+  margin: 6px 0;
+}
+
+/* ✅ 기본 링크 스타일 */
+.program-sidebar ul li a {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ✅ 아이콘 스타일 - 아이콘과 텍스트 간격 추가 */
+.program-sidebar ul li a .icon {
+  margin-right: 10px; /* ✅ 아이콘과 텍스트 사이 여백 조정 */
+  font-size: 16px;
+}
+
+/* ✅ 활성화된 링크 스타일 */
+.program-sidebar ul li a.active {
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+}
+
+/* ✅ 호버 효과 */
+.program-sidebar ul li a:hover {
+  background-color: #007bff;
+  color: white;
+  transform: translateX(5px); /* ✅ 마우스 오버 시 부드러운 이동 효과 */
+}
+
+/* ✅ 화면 크기가 950px 이하일 때 사이드바 숨기기 */
+@media (max-width: 950px) {
+  .program-sidebar-container {
+    display: none; /* 사이드바를 숨김 */
+  }
+}

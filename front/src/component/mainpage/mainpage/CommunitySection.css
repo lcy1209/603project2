@@ -1,0 +1,92 @@
+.community-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+.notice-board, .community-board {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+  
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+  
+.notice-list {
+    list-style-type: none;
+    padding: 0;
+}
+  
+.notice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+  
+.notice-link {
+    color: #2563eb;
+    text-decoration: none;
+}
+  
+.notice-link:hover {
+    text-decoration: underline;
+}
+  
+.notice-date {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+  
+.more-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #2563eb;
+    text-decoration: none;
+}
+  
+.more-link:hover {
+    text-decoration: underline;
+}
+  
+.community-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+  
+.community-link {
+    display: block;
+    padding: 0.75rem;
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.3s;
+}
+  
+.community-link:hover {
+    background-color: #e5e7eb;
+}
+  
+.community-link-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+  
+.community-link-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+  
+@media (min-width: 768px) {
+    .community-section {
+      grid-template-columns: 1fr 1fr;
+    }
+}

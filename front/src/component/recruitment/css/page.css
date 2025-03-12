@@ -1,0 +1,30 @@
+/* page.css */
+
+/* 페이지네이션 스타일 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+.pagination .page-link {
+  padding: 8px 12px;
+  border: 1px solid #007bff;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.pagination .page-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination .active .page-link {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+}

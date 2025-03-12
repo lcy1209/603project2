@@ -1,0 +1,43 @@
+.career-program {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .career-program-container {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .career-program h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .program-image-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .program-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .career-program h1 {
+      font-size: 24px;
+    }
+  
+    .career-program-container {
+      padding: 0 15px;
+    }
+  }
+  
+  

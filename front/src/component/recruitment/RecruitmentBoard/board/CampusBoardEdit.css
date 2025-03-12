@@ -1,0 +1,355 @@
+/* 전체 레이아웃 */
+.campusboardedit-board-list {
+    width: 80%;
+    margin: 50px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.campusboardedit-b-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 제목 스타일 */
+.campusboardedit-bpage-title h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 검색 영역 */
+.campusboardedit-bsearch-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.campusboardedit-bsearch-wrap select, 
+.campusboardedit-bsearch-wrap input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.campusboardedit-bsearch-wrap button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.campusboardedit-bsearch-wrap button:hover {
+    background-color: #0056b3;
+}
+
+/* 게시글 개수 */
+.campusboardedit-b-count_content {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* 테이블 스타일 */
+.campusboardedit-b-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.campusboardedit-b-table th, .campusboardedit-b-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.campusboardedit-b-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.campusboardedit-b-table td {
+    background-color: #fff;
+}
+
+/* 제목 컬럼 클릭 가능하도록 */
+.campusboardedit-b-table .th-title {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.campusboardedit-b-table .th-title:hover {
+    text-decoration: underline;
+}
+
+/* 페이지네이션 스타일 */
+.campusboardedit-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.campusboardedit-pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.campusboardedit-pagination button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.campusboardedit-pagination .active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 📌 페이지네이션 스타일 */
+.campusboardedit-board_pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.campusboardedit-boardpage-item {
+    margin: 0 5px;
+}
+
+.campusboardedit-boardpage-link {
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.campusboardedit-boardpage-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 📌 현재 페이지 스타일 */
+.campusboardedit-boardpage-item .campusboardedit-boardpage-link.active {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: default;
+}
+
+/* 📌 좌우 이동 버튼 스타일 */
+.campusboardedit-boardpage-link:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 📌 작성하기 버튼 스타일 */
+.campusboardedit-write-btn {
+    margin-left: 10px;
+    padding: 10px 15px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.campusboardedit-write-btn:hover {
+    background-color: #218838;
+}
+
+/* 📌 게시글 작성 페이지 스타일 */
+.campusboardedit-board-write-container {
+    width: 50%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.campusboardedit-board-write-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.campusboardedit-board-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.campusboardedit-board-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.campusboardedit-board-form input,
+.campusboardedit-board-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.campusboardedit-board-form textarea {
+    height: 150px;
+    resize: none;
+}
+
+.campusboardedit-board-form input[type="file"] {
+    border: none;
+    background: none;
+}
+
+.campusboardedit-board-btn-group {
+    display: flex; /* 플렉스 박스 사용 */
+    justify-content: left; /* 왼쪽으로 */
+    margin-top: 20px; /* 위쪽 여백 추가 */
+}
+
+.campusboardedit-container {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    /* height: 100vh; 전체 화면 높이 */
+}
+
+.campusboardedit-board-edit-container {
+    width: 50%; /* 컨테이너 너비 */
+    padding: 20px; /* 내부 여백 */
+    background: #ffffff; /* 흰색 배경 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+
+
+
+.campusboardedit-btn-submit,
+.campusboardedit-btn-cancel {
+    padding: 5px 10px; /* 버튼 크기 조정 */
+    margin: 0 10px; /* 버튼 간 간격 추가 */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background: #007bff; /* 배경색 */
+}
+
+.campusboardedit-btn-submit:hover {
+    background: #0056b3;
+}
+
+.campusboardedit-btn-cancel {
+    background: #dc3545;
+}
+
+.campusboardedit-btn-cancel:hover {
+    background: #a71d2a;
+}
+
+/* 📌 상세 페이지 컨테이너 */
+.campusboardedit-board-detail-container {
+    width: 60%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.campusboardedit-board-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 작성자, 날짜, 조회수 스타일 */
+.campusboardedit-board-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* 본문 스타일 */
+.campusboardedit-board-content {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* 첨부 이미지 스타일 */
+.campusboardedit-board-images {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.campusboardedit-board-img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* 버튼 스타일 */
+.campusboardedit-board-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.campusboardedit-btn-back {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.campusboardedit-btn-back:hover {
+    background: #0056b3;
+}
+
+/* 📌 이미지 컨테이너 */
+.campusboardedit-board-images-container {
+    display: flex;  /* Flexbox 사용 */
+    justify-content: center;  /* 수평 가운데 정렬 */
+    align-items: center;  /* 수직 가운데 정렬 */
+    margin-top: 20px;  /* 위쪽 여백 추가 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 📌 이미지 크기 조정 */
+.campusboardedit-board-img {
+    max-width: 100%;  /* 화면 너비에 맞게 조정 */
+    max-height: 500px;  /* 최대 높이 제한 */
+    width: auto;  /* 비율 유지 */
+    height: auto; 
+}

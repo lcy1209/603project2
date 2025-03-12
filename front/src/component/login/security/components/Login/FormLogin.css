@@ -1,0 +1,102 @@
+body.login-page {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74b9ff, #a29bfe); /* 시원한 배경 그라데이션 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    
+    margin: auto;
+    padding: 15px 15px;
+    border-radius: 12px;
+    
+    width: 100%;
+    max-width: 800px; /* 로그인 박스 최대 너비 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container:hover {
+    transform: scale(1.02); /* 마우스 호버 시 확대 */
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    color: #2d3436; /* 어두운 글씨 색상 */
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 입력 필드 간격 */
+}
+
+.login-form label {
+    display: block;
+    font-size: 14px;
+    color: #636e72; /* 중간 톤 색상 */
+    margin-bottom: 5px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    border-color: #0984e3;
+    box-shadow: 0 0 8px rgba(9, 132, 227, 0.3);
+    outline: none;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 12px;
+    background: #0984e3; /* 파란색 버튼 */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.login-form button:hover {
+    background: #0652dd; /* 어두운 파란색 */
+    transform: translateY(-2px); /* 살짝 위로 이동 */
+}
+
+.login-form .link {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* 링크 간격 */
+    font-size: 14px;
+    color: #636e72;
+}
+
+.login-form .link a {
+    text-decoration: none;
+    color: #0984e3; /* 파란색 링크 */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-form .link a:hover {
+    color: #0652dd; /* 어두운 파란색 */
+}

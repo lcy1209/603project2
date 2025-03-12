@@ -1,0 +1,96 @@
+/* 전체 레이아웃 */
+.main-recruitment__container {
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    display: flex; /* 사이드바와 중앙 콘텐츠 나란히 배치 */
+}
+
+/* 안내 메시지 카드 스타일 */
+.main-recruitment__message-card {
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 8px; /* 모서리 둥글기 */
+    padding: 16px; /* 안쪽 여백 */
+    margin-bottom: 40px; /* 카드와 카드 간 간격 추가 */
+    text-align: center; /* 중앙 정렬 */
+}
+
+/* 카드 배열: 3개 배치 */
+.main-recruitment__row {
+    display: grid; /* Flexbox 대신 Grid 사용 */
+    grid-template-columns: repeat(3, 1fr); /* 가로 3개 배치 */
+    gap: 20px; /* 카드 간 간격 */
+}
+
+/* 사이드바 */
+.main-recruitment__sidebar-fixed {
+    flex: 0 0 280px; /* 고정된 사이드바 너비 */
+}
+
+/* 중앙 콘텐츠 */
+.main-recruitment__col-md-9 {
+    flex: 1; /* 나머지 공간 차지 */
+    margin-left: 30px; /* 사이드바와의 간격 추가 */
+    overflow: hidden; /* 넘치는 내용 숨김 */
+}
+
+/* 카드 스타일 */
+.main-recruitment__card {
+    border: none; /* 카드 테두리 제거 */
+    border-radius: 8px; /* 카드 모서리 둥글기 */
+    margin: 10px; /* 카드 간격 */
+    height: 300px; /* 카드 높이 조정 */
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 배치 */
+}
+
+.main-recruitment__card-img-top {
+    width: 100%; /* 카드의 너비에 맞게 이미지 크기 조정 */
+    height: 90%; /* 이미지가 카드의 80%를 차지하도록 설정 */
+    object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.main-recruitment__card-body {
+    height: 10%; /* 텍스트 영역이 카드의 20%를 차지하도록 설정 */
+    display: flex;
+    justify-content: center; /* 텍스트 중앙 정렬 */
+    align-items: center; /* 텍스트 수직 중앙 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 0 10px; /* 좌우 여백 추가 (선택 사항) */
+    color: black; /* 글씨 색상을 검은색으로 설정 */
+}
+
+.main-recruitment__card-link {
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: inherit; /* 부모 요소의 색상 상속 */
+}
+
+.main-recruitment__card:hover {
+    transform: translateY(-5px); /* 카드 호버 시 위로 이동 효과 */
+}
+
+
+/* 반응형 레이아웃 */
+@media (max-width: 768px) {
+    .main-recruitment__container {
+        flex-direction: column; /* 세로 레이아웃 전환 */
+    }
+
+    .main-recruitment__col-md-9 {
+        margin-left: 0; /* 사이드바와의 간격 제거 */
+    }
+
+    .main-recruitment__row {
+        grid-template-columns: repeat(2, 1fr); /* 가로 2개 배치 */
+    }
+
+    .main-recruitment__col-md-4 {
+        flex: 0 0 100%; /* 한 줄에 카드 하나 */
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-recruitment__row {
+        grid-template-columns: 1fr; /* 한 줄에 한 개 배치 */
+    }
+}

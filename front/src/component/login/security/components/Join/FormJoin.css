@@ -1,0 +1,174 @@
+/* 폼 전체 스타일 */
+.join-form-container {
+    background-color: #ffffff; /* 흰색 배경 */
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    margin: 20px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.join-form-container:hover {
+    transform: scale(1.02); /* 마우스 호버 시 확대 효과 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.join-form-container .join-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #2d3436; /* 어두운 회색 */
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 폼 내부 구성 */
+.join-form {
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
+    text-align: left;
+}
+
+.join-form-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.join-form-row label,
+.join-form-row input,
+.join-form-row select,
+.join-form-row button {
+    margin: 0 10px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.join-form-row label {
+    flex: 0 0.5 120px;
+    color: #636e72; /* 중간 톤 회색 */
+}
+
+.join-form-row input,
+.join-form-row select {
+    flex: 1;
+    border: 2px solid #dfe6e9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.join-form-row input:focus,
+.join-form-row select:focus {
+    border-color: #0984e3;
+    box-shadow: 0 0 8px rgba(9, 132, 227, 0.3);
+    outline: none;
+}
+
+.join-form-row button {
+    flex: 0 1 170px;
+    background-color: #0984e3; /* 파란색 버튼 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.join-form-row button:hover {
+    background-color: #0652dd;
+    transform: translateY(-3px); /* 버튼 살짝 위로 이동 */
+}
+
+/* 이메일 필드 */
+.join-email span {
+    line-height: 44px;
+}
+
+/* 라디오 버튼 */
+.join-radio input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.join-radio .check-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #f1f2f6;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.join-radio input:checked + .check-label {
+    background-color: #0984e3;
+    color: white;
+    border: 1px solid #0652dd;
+}
+
+/* 비밀번호 유효성 메시지 */
+.join-form-row p {
+    visibility: hidden;
+    font-size: 12px;
+    color: red;
+    margin: 0 0 10px 30px;
+    padding: 0 0 0 120px;
+    text-align: left;
+}
+
+.join-form-row p.show {
+    visibility: visible;
+}
+
+/* 버튼 묶음 */
+.join-buttons {
+    display: flex;
+    justify-content: space-between; /* 버튼 간격을 양쪽으로 벌림 */
+    margin-top: 20px;
+}
+
+/* 버튼 스타일 */
+.join-buttons .btn-back {
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #dfe6e9; /* 연한 회색 배경 */
+    color: #2d3436;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.join-buttons .btn-back:hover {
+    background-color: #b2bec3; /* 회색으로 살짝 어두운 색 */
+    transform: translateY(-3px); /* 버튼 살짝 위로 이동 */
+}
+
+.join-buttons .btn-login {
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #0984e3; /* 파란색 배경 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.join-buttons .btn-login:hover {
+    background-color: #3c4ba0;
+    transform: translateY(-3px); /* 버튼 살짝 위로 이동 */
+}

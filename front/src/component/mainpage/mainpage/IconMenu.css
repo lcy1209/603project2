@@ -1,0 +1,58 @@
+.icon-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.icon-menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: white;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+  
+.icon-menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+  
+/* 각 메뉴 아이템별 색상 */
+.icon-menu-item.jobs {
+    background-color: #4c6ef5;
+}
+  
+.icon-menu-item.programs {
+    background-color: #40c057;
+}
+  
+.icon-menu-item.counseling {
+    background-color: #f76707;
+}
+  
+.icon-menu-item.resources {
+    background-color: #ae3ec9;
+}
+
+.icon-menu-text {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.icon-menu-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+  
+@media (min-width: 768px) {
+    .icon-menu {
+      grid-template-columns: repeat(4, 1fr);
+    }
+}

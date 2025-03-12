@@ -1,0 +1,13 @@
+.underline:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.board-name {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px; /* 둥근 모서리 */
+    background-color: #f0f0f0; /* 배경색 */
+    margin-left: 10px; /* 버튼과의 간격 */
+    font-weight: bold; /* 글씨 두껍게 */
+}

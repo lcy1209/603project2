@@ -1,0 +1,83 @@
+/* ScheduleManage.css */
+.offline-schedule-manage {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 70vh;
+}
+
+.offline-schedule-manage h2 {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+    text-align: center;
+}
+
+.offline-schedule-manage table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.offline-schedule-manage thead {
+    background-color: #f8f9fa;
+}
+
+.offline-schedule-manage th {
+    padding: 15px;
+    font-weight: bold;
+    border-top: 2px solid #333;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.offline-schedule-manage td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.offline-schedule-manage tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 상태에 따른 스타일 */
+.offline-schedule-manage td:nth-child(3) {
+    font-weight: bold;
+}
+
+.offline-schedule-manage td:nth-child(3)[data-status="available"] {
+    color: #2196F3;
+}
+
+.offline-schedule-manage td:nth-child(3)[data-status="reserved"] {
+    color: #F44336;
+}
+
+/* 삭제 버튼 스타일 */
+.offline-schedule-manage button {
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.offline-schedule-manage button:hover {
+    background-color: #c82333;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .offline-schedule-manage {
+        padding: 10px;
+    }
+    
+    .offline-schedule-manage th,
+    .offline-schedule-manage td {
+        padding: 10px;
+    }
+}

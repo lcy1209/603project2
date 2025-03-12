@@ -1,0 +1,24 @@
+.board-pagination {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 3px;
+    margin-top: 20px;
+}
+
+.board-page-item > button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+}
+
+.page-arrows {
+    font-size: large;
+}
+

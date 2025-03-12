@@ -1,0 +1,150 @@
+.offline-schedule-calendar {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.offline-calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.offline-calendar {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.offline-calendar th, .offline-calendar td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.offline-calendar th {
+    background-color: #f8f9fa;
+}
+
+.offline-calendar td {
+    position: relative;  /* 자식 요소의 절대 위치 기준점 */
+    vertical-align: top; /* 내용을 위쪽으로 정렬 */
+}
+
+.cell-content {
+    min-height: 100px;
+    position: relative;
+    overflow-wrap: break-word;
+}
+
+.offline-calendar th.sun { color: #ff6b6b; }
+.offline-calendar th.sat { color: #339af0; }
+
+.cal-day {
+    text-align: left;
+    left: 5px;         /* 왼쪽 여백 */
+    font-weight: bold;
+}
+
+.offline-schedule-container {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.offline-schedule {
+    font-size: 0.8rem;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.offline-schedule.available {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.offline-schedule.reserved {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.offline-calendar-header button {
+    padding: 5px 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+/* 일요일 날짜 스타일 */
+.offline-calendar td:first-child .cal-day {
+    color: #ff3333;
+}
+
+
+/* 상담 일정 작성 버튼 */
+.admin-button-container {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.register-schedule-button {
+    padding: 10px 20px;
+    background-color: #003875;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.register-schedule-button:hover {
+    background-color: #002855;
+}
+
+.admin-button-container {
+    margin-top: 20px;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.manage-schedule-button {
+    padding: 10px 20px;
+    background-color: #003875;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.manage-schedule-button:hover {
+    background-color: #002855;
+}
+
+@media screen and (max-width: 768px) {
+
+    .offline-schedule-calendar {
+        padding: 0;
+    }
+
+    .offline-calendar {
+        font-size: 0.7rem;
+    }
+    
+    .offline-calendar th, .offline-calendar td {
+        padding: 5px;
+    }
+
+    .offline-schedule {
+        font-size: 0.6rem;
+    }
+
+    .offline-counsel-time {
+        font-size: 0.6rem;
+    }
+}

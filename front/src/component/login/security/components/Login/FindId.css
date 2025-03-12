@@ -1,0 +1,138 @@
+/* FindId.css */
+body.find-id-page {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #81ecec, #74b9ff); /* 시원한 그라데이션 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.find-id-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 80px;
+    background-color: #ffffff; /* 흰색 배경 */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 부드러운 그림자 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.find-id-container:hover {
+    transform: scale(1.02); /* 마우스 호버 시 확대 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.find-id-container h2 {
+    margin-bottom: 25px;
+    color: #2d3436; /* 짙은 회색 */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.find-id-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 필드 간격 */
+    margin-top: 10px;
+}
+
+.find-id-form .form-group {
+    width: 100%;
+}
+
+.find-id-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #636e72; /* 중간 톤 회색 */
+    font-size: 16px;
+}
+
+.find-id-form input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #dfe6e9; /* 밝은 회색 테두리 */
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.find-id-form input:focus {
+    border-color: #0984e3; /* 파란색 강조 */
+    box-shadow: 0 0 8px rgba(9, 132, 227, 0.3);
+    outline: none;
+}
+
+.find-id-form .btn-primary {
+    padding: 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #0984e3, #74b9ff); /* 파란색 그라데이션 */
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.find-id-form .btn-primary:hover {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    transform: translateY(-3px); /* 버튼 살짝 위로 이동 */
+}
+
+.find-id-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #ffffff; /* 흰색 팝업 */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.find-id-popup p {
+    margin-bottom: 20px;
+    color: #2d3436;
+    font-size: 18px;
+}
+
+.find-id-popup .btn-secondary {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #0984e3;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.find-id-popup .btn-secondary:hover {
+    background-color: #0652dd;
+    transform: translateY(-2px);
+}
+
+.find-id-link {
+    margin-top: 30px;
+}
+
+.find-id-link a {
+    text-decoration: none;
+    color: #0984e3; /* 파란색 링크 */
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.find-id-link a:hover {
+    color: #0652dd; /* 어두운 파란색 */
+}

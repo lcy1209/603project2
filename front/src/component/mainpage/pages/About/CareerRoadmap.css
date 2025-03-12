@@ -1,0 +1,43 @@
+.career-roadmap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.career-roadmap-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.career-roadmap h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.roadmap-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.roadmap-image {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .career-roadmap h1 {
+      font-size: 24px;
+    }
+  
+    .career-roadmap-container {
+      padding: 0 15px;
+    }
+}

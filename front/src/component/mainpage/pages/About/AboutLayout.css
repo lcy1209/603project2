@@ -1,0 +1,24 @@
+.about-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: calc(100vh - 135px - 200px); /* 헤더와 푸터를 제외한 최소 높이 */
+}
+
+.about-content {
+  flex-grow: 1;
+  padding-bottom: 40px; /* 하단 여백 추가 */
+}
+
+@media (max-width: 768px) {
+  .about-layout {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .about-content {
+    width: 100%;
+  }
+}

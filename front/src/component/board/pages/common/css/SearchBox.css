@@ -1,0 +1,33 @@
+.common-board-search-box {
+    display: flex;
+    gap: 10px;
+}
+
+.common-board-search-box > select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.common-board-search-box > input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    width: 200px;
+    border-radius: 4px;
+}
+
+.common-board-search-box > button {
+    padding: 8px 15px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+@media screen and (max-width: 768px) {
+    .common-board-search-box {
+        max-height: 2rem;
+        font-size: 0.7rem;
+    }
+}

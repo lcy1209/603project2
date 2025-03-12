@@ -1,0 +1,42 @@
+.info-boxes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.info-box {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.3s;
+}
+
+.info-box:hover {
+    background-color: #f9fafb;
+}
+
+.info-box-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.info-box-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+@media (min-width: 1024px) {
+    .info-boxes {
+      grid-template-columns: repeat(5, 1fr);
+    }
+}
+  
+@media (min-width: 768px) {
+    .info-boxes {
+      grid-template-columns: repeat(3, 1fr);
+    }
+}
