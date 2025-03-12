@@ -1,0 +1,209 @@
+package com.example.hansei.recruitmentapi.service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.example.hansei.recruitmentapi.dto.EventDto;
+import com.fasterxml.jackson.databind.JsonNode;
+
+@Service
+public class EventService {
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    // authKey를 application.properties에서 주입 받음
+    @Value("${authKey}")
+    private String authKey;
+
+    private final XmlToJsonConverter xmlToJsonConverter;
+
+    
+    // XmlToJsonConverter를 주입받음
+    public EventService(XmlToJsonConverter xmlToJsonConverter) {
+        this.xmlToJsonConverter = xmlToJsonConverter;
+    }
+
+    public List<EventDto> searchWorkBoard(
+            String returnType,
+            String callTp,
+            String eventType,
+            String srchBgnDt,
+            String srchEndDt,
+            String areaCd,
+            String keyword,
+            int startPage,
+            int display
+    ) {
+        try {
+            if (authKey == null || authKey.isEmpty()) {
+                throw new IllegalArgumentException("❌ authKey가 설정되지 않았습니다.");
+            }
+
+            String apiUrl = "https://www.work24.go.kr/cm/openApi/call/wk/callOpenApiSvcInfo210L11.do";
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                    .queryParam("authKey", authKey)
+                    .queryParam("returnType", returnType)
+                    .queryParam("callTp", callTp)
+                    .queryParam("startPage", startPage)
+                    .queryParam("display", display);
+
+            if (srchBgnDt != null && !srchBgnDt.isEmpty()) builder.queryParam("srchBgnDt", srchBgnDt);
+            if (srchEndDt != null && !srchEndDt.isEmpty()) builder.queryParam("srchEndDt", srchEndDt);
+            if (keyword != null && !keyword.isEmpty()) builder.queryParam("keyword", keyword);
+            if (areaCd != null && !areaCd.isEmpty()) builder.queryParam("areaCd", areaCd);
+
+            String finalUrl = builder.toUriString();
+            System.out.println("🔍 외부 API 호출 URL: " + finalUrl);
+
+            ResponseEntity<String> response = restTemplate.getForEntity(finalUrl, String.class);
+            System.out.println("🔍 API 응답 본문: " + response.getBody());
+
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                return parseExternalApiResponse(response.getBody());
+            } else {
+                System.err.println("❌ API 응답 실패: HTTP " + response.getStatusCode());
+                return Collections.emptyList();
+            }
+        } catch (Exception e) {
+            System.err.println("❌ API 호출 중 오류 발생: " + e.getMessage());
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    private List<EventDto> parseExternalApiResponse(String xmlResponse) {
+    	try {
+    	    // XML을 JSON으로 변환
+    	    JsonNode root = xmlToJsonConverter.convertXmlToJson(xmlResponse);
+    	    System.out.println("🔍 변환된 JSON: " + root.toString());
+    	    if (root == null) {
+    	        System.err.println("❌ XML을 JSON으로 변환하는 데 실패했습니다.");
+    	        return Collections.emptyList();
+    	    }
+
+    	    // XML에서 필요한 데이터 추출
+    	    JsonNode dataArray = root.path("empEvent");
+    	    if (!dataArray.isArray() || dataArray.isEmpty()) {
+    	        System.err.println("❌ API 응답 데이터가 비어 있습니다.");
+    	        return Collections.emptyList();
+    	    }
+    	    
+    	    // 데이터 파싱
+    	    List<EventDto> eventList = new ArrayList<>();
+    	    for (JsonNode eventNode : dataArray) {
+    	        String eventNo = eventNode.path("eventNo").asText();
+    	        String title = eventNode.path("eventNm").asText();
+                String area = eventNode.path("area").asText();
+                String areaCd = eventNode.path("areaCd").asText();
+                String eventTerm = eventNode.path("eventTerm").asText();
+
+                LocalDate startDate = null;
+                LocalDate endDate = null;
+
+                try {
+                    String[] dates = eventTerm.split(" ~ ");
+                    if (dates.length == 2) {
+                        startDate = LocalDate.parse(dates[0].trim());
+                        endDate = LocalDate.parse(dates[1].trim());
+                    } else {
+                        startDate = LocalDate.parse(eventNode.path("startDt").asText());
+                        endDate = startDate;
+                    }
+                } catch (Exception e) {
+                    System.err.println("⚠️ 날짜 변환 오류 발생: " + e.getMessage());
+                    startDate = LocalDate.now(); // 기본값 설정
+                    endDate = LocalDate.now();
+                }
+
+                eventList.add(new EventDto(eventNo, title, area, areaCd, eventTerm, startDate, endDate));
+            }
+
+            return eventList;
+        } catch (Exception e) {
+            System.err.println("🔴 XML 파싱 오류: " + e.getMessage());
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+    
+    public EventDto getEventDetail(String eventNo) {
+        if (authKey == null || authKey.isEmpty()) {
+            System.err.println("❌ authKey가 설정되지 않았습니다.");
+            return new EventDto(eventNo, "알 수 없음", "알 수 없음", "알 수 없음", "알 수 없음", null, null);
+        }
+
+        String apiUrl = "https://api.worknet.go.kr/service/event/detail";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                .queryParam("eventNo", eventNo)
+                .queryParam("authKey", authKey);
+
+        String finalUrl = builder.toUriString();
+        System.out.println("🔍 이벤트 상세 조회 URL: " + finalUrl);
+
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(finalUrl, String.class);
+
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                return parseEventDetail(response.getBody(), eventNo);
+            } else {
+                System.err.println("❌ 이벤트 상세 정보 조회 실패: HTTP " + response.getStatusCode());
+                return new EventDto(eventNo, "알 수 없음", "알 수 없음", "알 수 없음", "알 수 없음", null, null);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ 이벤트 상세 정보 조회 중 오류 발생: " + e.getMessage());
+            return new EventDto(eventNo, "알 수 없음", "알 수 없음", "알 수 없음", "알 수 없음", null, null);
+        }
+    }
+
+    
+    private EventDto parseEventDetail(String xmlResponse, String eventNo) {
+        try {
+            JsonNode root = xmlToJsonConverter.convertXmlToJson(xmlResponse);
+            System.out.println("🔍 이벤트 상세 변환된 JSON: " + root.toString());
+
+            if (root == null || root.isEmpty()) {
+                System.err.println("❌ 이벤트 상세 API 응답이 비어 있습니다.");
+                return new EventDto(eventNo, "알 수 없음", "알 수 없음", "알 수 없음", "알 수 없음", null, null);
+            }
+
+            JsonNode eventNode = root.path("empEvent");
+            String title = eventNode.path("eventNm").asText("알 수 없음");
+            String area = eventNode.path("area").asText("알 수 없음");
+            String eventTerm = eventNode.path("eventTerm").asText("알 수 없음");
+
+            LocalDate startDate = null;
+            LocalDate endDate = null;
+            try {
+                String[] dates = eventTerm.split(" ~ ");
+                if (dates.length == 2) {
+                    startDate = LocalDate.parse(dates[0].trim());
+                    endDate = LocalDate.parse(dates[1].trim());
+                }
+            } catch (Exception e) {
+                System.err.println("⚠️ 날짜 변환 오류 발생: " + e.getMessage());
+            }
+
+            return EventDto.builder()
+                    .eventNo(eventNo)
+                    .title(title)
+                    .area(area)
+                    .eventTerm(eventTerm)
+                    .startDate(startDate)
+                    .endDate(endDate)
+                    .build();
+        } catch (Exception e) {
+            System.err.println("❌ 이벤트 상세 정보 파싱 오류: " + e.getMessage());
+            return new EventDto(eventNo, "알 수 없음", "알 수 없음", "알 수 없음", "알 수 없음", null, null);
+        }
+    }
+
+}

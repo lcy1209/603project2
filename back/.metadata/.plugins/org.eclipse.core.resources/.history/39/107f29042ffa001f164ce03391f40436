@@ -1,0 +1,51 @@
+package com.example.hansei.recruitmentapi.service;
+
+import com.example.hansei.entity.HanUser;
+import com.example.hansei.login.repository.UserRepository;
+import com.example.hansei.recruitmentapi.entity.EventFavorite;
+import com.example.hansei.recruitmentapi.repository.EventFavoriteRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class EventFavoriteService {
+
+    private final EventFavoriteRepository eventFavoriteRepository;
+    private final UserRepository userRepository;
+
+    // 📌 즐겨찾기 추가
+    public void addFavorite(Long userId, String eventNo) {
+        if (eventFavoriteRepository.findByUser_UserIdAndEventNo(userId, eventNo).isEmpty()) {
+            HanUser user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            EventFavorite favorite = EventFavorite.builder()
+                    .user(user)
+                    .eventNo(eventNo)
+                    .isDeleted(false)
+                    .build();
+
+            eventFavoriteRepository.save(favorite);
+        }
+    }
+
+    // 📌 즐겨찾기 취소 (Soft Delete)
+    public void removeFavorite(Long userId, String eventNo) {
+        eventFavoriteRepository.findByUser_UserIdAndEventNo(userId, eventNo)
+                .ifPresent(favorite -> {
+                    favorite.setDeleted(true);
+                    eventFavoriteRepository.save(favorite);
+                });
+    }
+
+    // 📌 사용자의 즐겨찾기 목록 조회
+    public List<String> getUserFavorites(Long userId) {
+        return eventFavoriteRepository.findByUser_UserIdAndIsDeletedFalse(userId)
+                .stream()
+                .map(EventFavorite::getEventNo)
+                .collect(Collectors.toList());
+    }
+}

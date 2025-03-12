@@ -1,0 +1,73 @@
+package com.example.hansei.programs;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/programs/applications")
+@CrossOrigin(origins = "http://localhost:3000")
+public class ProgramApplicationController {
+    private final ApplicationService applicationService;
+
+    public ProgramApplicationController(ApplicationService applicationService) {
+        this.applicationService = applicationService;
+    }
+
+    /**
+     * ✅ 특정 사용자의 신청 내역 조회 (프론트에서 필요한 정보만 반환)
+     */
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<ApplicationDto>> getUserApplications(@PathVariable Long userId) {
+        List<Application> applications = applicationService.getUserApplications(userId);
+
+        // ✅ DTO 변환하여 필요한 데이터만 반환
+        List<ApplicationDto> applicationDtos = applications.stream()
+                .map(app -> new ApplicationDto(
+                        app.getId(),
+                        app.getUser().getName(),  // 신청자 이름
+                        app.getProgram().getPosterName(),  // 기관명
+                        app.getProgram().getName(),  // 프로그램명
+                        app.getProgram().getStartDate(),
+                        app.getProgram().getEndDate(),
+                        app.getStatus() == Application.ApplicationStatus.APPLIED ? "모집중" : "취소됨"  // 상태 변환
+                ))
+                .collect(Collectors.toList());
+
+        System.out.println("📌 [신청 내역 조회] userId=" + userId + " → 신청 내역: " + applicationDtos);
+        return ResponseEntity.ok(applicationDtos);
+    }
+
+    /**
+     * ✅ 프로그램 신청 (JSON 객체로 userId 받음)
+     */
+    @PostMapping("/{programId}/apply")
+    public ResponseEntity<String> applyForProgram(@PathVariable Long programId, @RequestBody UserRequest request) {
+        Optional<Application> application = applicationService.applyForProgram(request.getUserId(), programId);
+        
+        if (application.isPresent()) {
+            System.out.println("✅ [신청 완료] userId=" + request.getUserId() + ", programId=" + programId);
+            return ResponseEntity.ok("신청 완료");
+        } else {
+            System.out.println("🚨 [신청 실패] 이미 신청했거나 정원이 초과됨: userId=" + request.getUserId() + ", programId=" + programId);
+            return ResponseEntity.badRequest().body("신청 실패: 이미 신청했거나 정원이 초과되었습니다.");
+        }
+    }
+
+    /**
+     * ✅ 사용자 요청을 받기 위한 내부 DTO (JSON 요청 처리)
+     */
+    static class UserRequest {
+        private Long userId;
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+    }
+}

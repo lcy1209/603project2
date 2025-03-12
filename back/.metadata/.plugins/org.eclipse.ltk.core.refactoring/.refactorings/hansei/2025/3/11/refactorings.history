@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 3 elements from project &apos;hansei&apos;&#x0D;&#x0A;- Original project: &apos;hansei&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     hansei/src/main/java/com.example.hansei.security.jwt&#x0D;&#x0A;     hansei/src/main/java/com.example.hansei.security.user&#x0D;&#x0A;     com.example.hansei.security.SecurityConfig.java" description="Delete elements" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.hansei.security.user" element2="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.hansei.security" element3="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.hansei.security.jwt" elements="3" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1741669996037" subPackages="false" version="1.0"/>
+</session>

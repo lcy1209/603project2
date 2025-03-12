@@ -1,0 +1,33 @@
+package com.example.hansei.programs;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor // ✅ 기본 생성자 추가 (JSON 변환 시 필요)
+public class ApplicationDto {
+    private Long id;             // 신청 ID
+    private String userName;      // 신청자 이름
+    private String posterName;    // 기관명
+    private String programName;   // 프로그램명
+    private String startDate;     // 교육 시작일
+    private String endDate;       // 교육 종료일
+    private String status;        // 신청 상태 (String 타입으로 변환)
+
+    /**
+     * ✅ `Application` 엔티티에서 `ApplicationDto`로 변환하는 정적 메서드 추가
+     */
+    public static ApplicationDto fromApplication(Application application) {
+        return new ApplicationDto(
+                application.getId(),
+                application.getUser().getName(),
+                application.getProgram().getPosterName(),
+                application.getProgram().getName(),
+                application.getProgram().getStartDate(),
+                application.getProgram().getEndDate(),
+                application.getStatus().name() // ✅ Enum을 String으로 변환
+        );
+    }
+}

@@ -1,0 +1,53 @@
+spring.application.name=hansei
+
+server.port = 8090
+
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://localhost:3306/hansei
+spring.datasource.username=root
+spring.datasource.password=12345
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.show_sql=true
+spring.mvc.pathmatch.matching-strategy=ant-path-matcher
+spring.jpa.database-platform=org.hibernate.dialect.MariaDBDialect
+
+
+# 메일 SMTP 설정 (메일 서버)
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+
+# 발신자의 이메일과 비밀번호 (별도의 인증을 받은 계정을 사용해야 함)
+spring.mail.username=fdsa1209@gmail.com
+spring.mail.password=dnkv ubzc nknv qqzh
+
+# 추가 SMTP 설정
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.auth=true
+
+jwt.secret=your-secret-key
+jwt.expiration=864000000
+
+# 업로드된 이미지가 저장될 폴더 설정
+file.upload-dir=uploads/
+
+# 정적 리소스 허용
+spring.mvc.static-path-pattern=/images/**
+
+# 업로드 파일 저장소
+file.upload.path=C:/project/newFiles/
+
+# 파일 업로드 크기 제한 설정
+spring.servlet.multipart.max-file-size=15MB
+spring.servlet.multipart.max-request-size=20MB
+
+// 캐시 설정
+spring.cache.type=simple
+
+kakao.client-id=8e2b98f25d68fd69bcd2836620b22739
+kakao.redirect-uri=http://localhost:3000/oauth/kakao/callback
+
+# 채용행사 키값
+authKey=47e7320e-d9fa-4891-9776-3469b885cdbe

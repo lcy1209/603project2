@@ -1,0 +1,86 @@
+package com.example.hansei.recruitmentapi.service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.example.hansei.entity.HanUser;
+import com.example.hansei.login.repository.UserRepository;
+import com.example.hansei.recruitmentapi.dto.EventDto;
+import com.example.hansei.recruitmentapi.entity.EventFavorite;
+import com.example.hansei.recruitmentapi.repository.EventFavoriteRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class EventFavoriteService {
+
+    private final EventFavoriteRepository eventFavoriteRepository;
+    private final UserRepository userRepository;
+    private final RestTemplate restTemplate;  // ✅ API 호출을 위한 `RestTemplate`
+
+    // 📌 즐겨찾기 추가
+    public void addFavorite(Long userId, String eventNo) {
+        if (eventFavoriteRepository.findByUser_UserIdAndEventNo(userId, eventNo).isEmpty()) {
+            HanUser user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            EventFavorite favorite = EventFavorite.builder()
+                    .user(user)
+                    .eventNo(eventNo)
+                    .isDeleted(false)
+                    .build();
+
+            eventFavoriteRepository.save(favorite);
+        }
+    }
+
+    // 📌 즐겨찾기 취소 (Soft Delete)
+    public void removeFavorite(Long userId, String eventNo) {
+        eventFavoriteRepository.findByUser_UserIdAndEventNo(userId, eventNo)
+                .ifPresent(favorite -> {
+                    favorite.setDeleted(true);
+                    eventFavoriteRepository.save(favorite);
+                });
+    }
+
+    // 📌 사용자의 즐겨찾기 목록 조회
+    public List<String> getUserFavorites(Long userId) {
+        return eventFavoriteRepository.findByUser_UserIdAndIsDeletedFalse(userId)
+                .stream()
+                .map(EventFavorite::getEventNo)
+                .collect(Collectors.toList());
+    }
+    
+//    public List<EventDto> getUserFavoriteEvents(Long userId) {
+//        List<String> favoriteEventIds = eventFavoriteRepository.findEventIdsByUserId(userId);
+//
+//        System.out.println("📌 사용자의 즐겨찾기한 이벤트 ID 목록: " + favoriteEventIds);  // ✅ 추가
+//
+//        return favoriteEventIds.stream()
+//                .map(this::fetchEventById)  // ✅ 이벤트 상세 정보 가져오기
+//                .filter(Objects::nonNull)
+//                .collect(Collectors.toList());
+//    }
+//
+//    private EventDto fetchEventById(String eventNo) {
+//        String url = "http://localhost:8090/api/work/board/detail?eventNo=" + eventNo;  // ✅ Spring Boot API 호출
+//
+//        System.out.println("📌 이벤트 상세 정보 요청: " + url);  // ✅ 추가
+//
+//        try {
+//            EventDto event = restTemplate.getForObject(url, EventDto.class);
+//            System.out.println("📌 이벤트 상세 정보 응답: " + event);  // ✅ 추가
+//            return event;
+//        } catch (Exception e) {
+//            System.err.println("❌ 이벤트 정보를 가져오는 중 오류 발생: " + e.getMessage());
+//            return null;
+//        }
+//    }
+
+}
