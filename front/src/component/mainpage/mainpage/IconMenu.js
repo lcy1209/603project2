@@ -7,7 +7,7 @@ const IconMenu = () => {
     {
       icon: <Briefcase size={40} />,
       text: "채용정보",
-      link: "/mainRecruitment",
+      link: "/jobs",
       className: "jobs",
     },
     {
@@ -19,13 +19,13 @@ const IconMenu = () => {
     {
       icon: <Users size={40} />,
       text: "상담예약",
-      link: "/counsel/offline",
+      link: "/counseling",
       className: "counseling",
     },
     {
       icon: <FileText size={40} />,
       text: "자료실",
-      link: "/community/archive",
+      link: "/resources",
       className: "resources",
     },
   ]

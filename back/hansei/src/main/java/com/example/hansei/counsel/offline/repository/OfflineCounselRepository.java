@@ -11,7 +11,7 @@ import com.example.hansei.counsel.offline.entity.OfflineCounsel;
 
 public interface OfflineCounselRepository extends JpaRepository<OfflineCounsel, Long>{
 
-	List<OfflineCounsel> findByCounselor(String counselor);
+	List<OfflineCounsel> findByCounselorId(String counselorId);
 	
 	// 월 별 상담 횟수
 	@Query(value = """

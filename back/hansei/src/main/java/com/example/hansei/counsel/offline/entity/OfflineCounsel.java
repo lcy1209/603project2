@@ -24,6 +24,9 @@ public class OfflineCounsel {
 	@Column(nullable = false)
 	private String counselor;
 	
+	@Column(nullable = false)
+	private String counselorId;
+	
 	@Column(nullable = true)
 	private String client;
 	

@@ -2,7 +2,9 @@ package com.example.hansei.counsel.online.service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +70,13 @@ public class OnlineCounselService {
 
     public void deleteCounsel(Long id) {
         counselRepository.deleteById(id);
+    }
+    
+    public List<OnlineCounselDto> getMyCounsels(String authorId) {
+        List<OnlineCounsel> counsels = counselRepository.findByAuthorId(authorId);
+        return counsels.stream()
+                       .map(this::convertToDto)
+                       .collect(Collectors.toList());
     }
     
     /*******************************답 변****************************************/

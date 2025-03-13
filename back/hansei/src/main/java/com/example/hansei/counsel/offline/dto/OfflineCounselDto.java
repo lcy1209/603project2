@@ -11,6 +11,7 @@ public class OfflineCounselDto {
 	
 	private Long id;
 	private String counselor;
+	private String counselorId;
 	private String client;
 	private LocalDate counsel_date;
 	private String counsel_time;

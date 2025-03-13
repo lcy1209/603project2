@@ -7,14 +7,14 @@ const Secession = () => {
     const [password, setPassword] = useState(''); // 비밀번호 입력 상태
     const [showPassword, setShowPassword] = useState(false); // 비밀번호 표시 상태
     const [loading, setLoading] = useState(false); // 요청 상태
-    const [error, setError] = useState(false); // ❌ 비밀번호 오류 상태 추가
+    const [error, setError] = useState(false); // 비밀번호 오류 상태 추가
     
-    // 🔹 회원탈퇴 페이지 진입 시 비밀번호 입력칸을 빈칸으로 유지
+    // 회원탈퇴 페이지 진입 시 비밀번호 입력칸을 빈칸으로 유지
     useEffect(() => {
         setPassword('');
     }, []); // 컴포넌트가 처음 렌더링될 때만 실행
 
-    // ❌ 비밀번호 오류 시 자동 초기화
+    // 비밀번호 오류 시 자동 초기화
     useEffect(() => {
         if (error) {
             setPassword('');
@@ -22,12 +22,12 @@ const Secession = () => {
         }
     }, [error]);
 
-    // 🔹 비밀번호 입력 핸들러 (공백 유지)
+    // 비밀번호 입력 핸들러 (공백 유지)
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
 
-    // 🔹 회원탈퇴 요청
+    // 회원탈퇴 요청
     const handleSubmit = async (event) => {
         event.preventDefault(); // 기본 폼 제출 동작 방지
 
@@ -40,18 +40,18 @@ const Secession = () => {
             setLoading(true);
             console.log('회원탈퇴 요청 시작:', { password });
 
-            // 🔹 회원탈퇴 API 요청
+            // 회원탈퇴 API 요청
             const response = await remove(password);
             console.log('회원탈퇴 요청 응답:', response);
 
             if (response.status === 200) {
                 alert('회원탈퇴가 성공적으로 처리되었습니다.');
 
-                // 🔹 ✅ 로컬 스토리지 초기화
+            // 로컬 스토리지 초기화
             localStorage.removeItem("token");  // JWT 토큰 삭제
             localStorage.removeItem("user");   // 사용자 정보 삭제
 
-            // 🔹 ✅ 상태 초기화 (전역 상태 사용 시)
+            // 상태 초기화 (전역 상태 사용 시)
             window.location.href = "/";  // 메인 화면으로 이동
 
             } else {
@@ -79,9 +79,12 @@ const Secession = () => {
             <div className="secession-container">
                 <main className="secession-main">
                     <Sidebar />
-                    <section className="secession-form-container" style={{ width: "75%", padding: "20px" }}>
+
+                    <section className="secession-form-container" 
+                            style={{ width: "75%", padding: "20px" }}>
                         <h1>회원 탈퇴</h1>
                         <div className="secession-division-line"></div>
+
                         <form onSubmit={handleSubmit}>
                             <div className="secession-text">
                                 그동안 서비스를 이용해 주셔서 대단히 감사합니다.
@@ -91,17 +94,19 @@ const Secession = () => {
                                 또한 탈퇴 시, 사용한 아이디로 재가입이 되지 않으니 이 점 양해 부탁드립니다.
                             </div>
                             <div className="secession-line"></div>
+
                             <label
                                 htmlFor="password"
                                 style={{ width: "50%", margin: "auto", fontSize: "19px", fontWeight: "bold" }}
                             >
                                 비밀번호 확인
                             </label>
+
                             <div className="password-container">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     id="password"
-                                    value={password} // 🔹 항상 빈칸 유지됨
+                                    value={password} // 항상 빈칸 유지됨
                                     onChange={handlePasswordChange}
                                     placeholder="비밀번호를 입력하세요"
                                     required
@@ -117,9 +122,11 @@ const Secession = () => {
                                     {showPassword ? '🔓' : '🔒'}
                                 </button>
                             </div>
+
                             <button type="submit" className="secession-button" disabled={loading}>
                                 {loading ? '탈퇴 처리 중...' : '회원 탈퇴'}
                             </button>
+                            
                         </form>
                     </section>
                 </main>

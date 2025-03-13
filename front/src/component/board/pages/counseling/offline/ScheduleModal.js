@@ -15,7 +15,7 @@ Modal.setAppElement('#root')
 const ScheduleModal = ({ isOpen, onClose }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState('');
-    const { isName } = useContext(LoginContext);
+    const { isName, isLoginId } = useContext(LoginContext);
 
     const timeSlots = [
         "09:00~10:00", "10:00~11:00", "11:00~12:00",
@@ -32,6 +32,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
             // POST 요청
             await axios.post(`${SERVER_URL}/api/counsel/schedule`, {
                 counselor: isName,
+                counselorId: isLoginId,
                 client: null, // 예약 전이므로 client는 null
                 counsel_date: formattedDate,
                 counsel_time: selectedTime,

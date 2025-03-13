@@ -26,6 +26,7 @@ import ProtectedRoute from "./component/mainpage/components/ProtectedRoute"
 import AdminLayout from "./component/mainpage/pages/Admin/AdminLayout"
 import Dashboard from './component/mainpage/pages/Admin/Dashboard';
 import UserManagement from "./component/mainpage/pages/Admin/UserManagement"
+import BannerManagement from './component/mainpage/pages/Admin/BannerManagement';
 // [ main - about ]
 import AboutLayout from "./component/mainpage/pages/About/AboutLayout"
 import DepartmentIntro from "./component/mainpage/pages/About/DepartmentIntro"
@@ -137,6 +138,7 @@ function App() {
               }>
               <Route index element={<Dashboard />} />
               <Route path="users" element={<UserManagement />} />
+              <Route path="banners" element={<BannerManagement />} />
             </Route>
             
             {/* board */}

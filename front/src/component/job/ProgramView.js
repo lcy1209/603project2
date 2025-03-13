@@ -11,12 +11,15 @@ function ProgramView({ category }) { // category는 부모 컴포넌트로부터
   const [sortOrder, setSortOrder] = useState("latest"); // 프로그램 정렬 기준 상태 변수 (최신순, 종료임박순, 인기순)
   const programsPerPage = 6; // 한 페이지당 표시할 프로그램 수
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
+ const [userId, setUserId] = useState(null); // 로그인한 사용자 ID 저장
 
   useEffect(() => {
     const stompClient = new Client({ // WebSocket 클라이언트 설정
       brokerURL: "ws://localhost:8090/ws", // WebSocket 서버 URL 설정
       onConnect: () => { // WebSocket 연결 성공 시 실행되는 콜백 함수
         console.log("WebSocket 연결 성공");
+
+        // 기존 프로그램 정보 업데이트 구독
         stompClient.subscribe("/topic/programs", (message) => { // 프로그램 정보가 변경되면 이곳에서 처리
           try {
             const updatedProgram = JSON.parse(message.body); // 메시지 본문을 JSON으로 파싱
@@ -29,6 +32,24 @@ function ProgramView({ category }) { // category는 부모 컴포넌트로부터
             console.error("WebSocket 메시지 처리 오류:", error); // 오류 처리
           }
         });
+
+        // 즐겨찾기 변경 사항 반영 (새로운 구독 추가)
+        stompClient.subscribe("/topic/favorites", (message) => {
+          try {
+            const updatedProgramId = JSON.parse(message.body);
+
+            setPrograms((prevPrograms) =>
+              prevPrograms.map((program) =>
+                program.id === updatedProgramId
+                  ? { ...program, isFavorite: !program.isFavorite }
+                  : program
+              )
+            );
+
+          } catch (error) {
+            console.error("🚨 즐겨찾기 WebSocket 메시지 처리 오류:", error);
+          }
+        });
       },
     });
 
@@ -38,69 +59,140 @@ function ProgramView({ category }) { // category는 부모 컴포넌트로부터
     return () => stompClient.deactivate(); // 컴포넌트가 언마운트될 때 WebSocket 연결 해제
   }, [category]); // category가 변경될 때마다 다시 프로그램 데이터를 불러옴
 
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+  
+  const fetchUserId = async () => {
+    const token = localStorage.getItem("accessToken");
+  
+    console.log("📌 ProgramView: 저장된 JWT 토큰:", token); // ✅ 토큰 확인
+  
+    if (!token || token === "null") {
+      console.error("🚨 ProgramView: 로그인이 필요합니다. (토큰 없음)");
+      alert("🚨 로그인 후 다시 시도해주세요.");
+      navigate("/login");
+      return null;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:8090/users/info", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      console.log("📌 ProgramView: /users/info 응답 상태:", response.status);
+  
+      if (!response.ok) {
+        console.error("🚨 ProgramView: 유저 정보를 가져올 수 없습니다.");
+        return null;
+      }
+  
+      const data = await response.json();
+      console.log("📌 ProgramView: 가져온 userId:", data.userId);
+  
+      setUserId(data.userId);
+      return data.userId;
+    } catch (error) {
+      console.error("🚨 ProgramView: 사용자 정보를 불러오는 중 오류 발생:", error);
+      return null;
+    }
+  };
+  
+
   // 선택된 카테고리에 맞는 프로그램 데이터를 가져오는 함수
   const fetchPrograms = async () => {
     try {
       const response = await fetch("http://localhost:8090/api/programs"); // API에서 프로그램 목록 가져오기
       if (!response.ok) throw new Error("프로그램 데이터를 불러오는 데 실패했습니다.");
       const data = await response.json(); // 응답 데이터를 JSON으로 변환
-  
+
       // 로컬 스토리지에서 즐겨찾기 여부 반영
       const updatedPrograms = data.map((program) => ({
         ...program,
         isFavorite: JSON.parse(localStorage.getItem(`favorite_${program.id}`) ?? "false"), // ✅ 저장된 즐겨찾기 정보 반영
       }));
-  
+
       //  카테고리 필터링 적용
       const filteredPrograms = category === "전체"
         ? updatedPrograms
         : updatedPrograms.filter((program) => program.category === category);
-  
+
       setPrograms(filteredPrograms);
     } catch (error) {
       console.error("프로그램 데이터 로드 오류:", error); // 데이터 로드 오류 처리
     }
   };
 
-   // 즐겨찾기 토글 함수 (즐겨찾기 여부를 반영)
-   const toggleFavorite = async (programId) => {
-    const favoriteKey = `favorite_${programId}`;
-    const currentStatus = JSON.parse(localStorage.getItem(favoriteKey)) || false;
-    const newStatus = !currentStatus;
-  
-    // 로컬 스토리지에 새로운 상태 저장
-    localStorage.setItem(favoriteKey, JSON.stringify(newStatus));
-    console.log("localStorage 업데이트됨:", favoriteKey, newStatus);
-  
-    // 서버에 즐겨찾기 상태 변경 요청
-    try {
-      const response = await fetch("http://localhost:8090/api/favorites/toggle", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: 1,  // 로그인된 유저의 ID
-          programId: programId,  // 프로그램 ID
-        }),
-      });
+  // 즐겨찾기 토글 함수 (즐겨찾기 여부를 반영)
+ const toggleFavorite = async (programId) => {
+  let currentUserId = userId;
 
-      if (!response.ok) {
-        throw new Error("즐겨찾기 상태 변경 실패");
-      }
-      console.log("즐겨찾기 상태 DB에 저장 완료");
+  // ✅ userId가 없으면 fetchUserId() 실행
+  if (!currentUserId) {
+    console.warn("⚠️ ProgramView: userId가 없음. 다시 가져오는 중...");
+    currentUserId = await fetchUserId();
+  }
 
-    } catch (error) {
-      console.error("서버와의 연결 실패:", error);
+  if (!currentUserId) {
+    console.error("❌ ProgramView: 로그인된 사용자 ID가 없습니다.");
+    return;
+  }
+
+  const favoriteKey = `favorite_${currentUserId}_${programId}`;
+  const currentStatus = JSON.parse(localStorage.getItem(favoriteKey)) || false;
+  const newStatus = !currentStatus;
+
+  // ✅ localStorage 업데이트
+  localStorage.setItem(favoriteKey, JSON.stringify(newStatus));
+  console.log("📌 localStorage 업데이트:", favoriteKey, newStatus);
+
+  // ✅ JWT 토큰 가져오기
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    console.error("❌ ProgramView: 토큰이 없습니다. API 요청 중단");
+    return;
+  }
+
+  try {
+    console.log("📌 ProgramView: 요청 userId:", currentUserId, "📌 요청 programId:", programId);
+
+    const response = await fetch("http://localhost:8090/api/favorites/toggle", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId: currentUserId,
+        programId,
+      }),
+    });
+
+    console.log("📌 ProgramView: 서버 응답 상태 코드:", response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`❌ ProgramView: 즐겨찾기 상태 변경 실패. 서버 응답: ${response.status} - ${errorText}`);
     }
+
+    console.log("✅ ProgramView: 즐겨찾기 상태 DB에 저장 완료");
+
+    // ✅ 상태 업데이트
     setPrograms((prevPrograms) =>
       prevPrograms.map((program) =>
-        program.id === programId ? { ...program, isFavorite: newStatus } : program
+        program.programId === programId ? { ...program, isFavorite: newStatus } : program
       )
     );
-    // 모든 곳에서 반영되도록 이벤트 발생
+
+    // ✅ storage 이벤트 발생 (JobDetail에서도 반영되도록)
     window.dispatchEvent(new Event("storage"));
-  };
+
+  } catch (error) {
+    console.error("❌ ProgramView: 서버와의 연결 실패:", error);
+  }
+};
+
+
 
   // 프로그램 상세보기 페이지로 이동하는 함수
   const handleViewDetails = (programId) => {

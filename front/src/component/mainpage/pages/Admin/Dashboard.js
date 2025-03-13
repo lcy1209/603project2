@@ -17,6 +17,9 @@ const Dashboard = () => {
   // 고용24 채용 공고 API
   const [WorkBoardCount, setWorkBoardCount] = useState(0);
   const [latestWorkTitle, setLatestWorkTitle] = useState("없음");
+  // 사용자 API
+  const [userCount, setUserCount] = useState(0);
+  const [latestUser, setLatestUser] = useState("없음");
 
 
   useEffect(() => {
@@ -24,6 +27,7 @@ const Dashboard = () => {
     fetchSuggestBoardStats();
     fetchCompusBoardStats();
     fetchWorkBoardStats();
+    fetchUserStats();
   }, [])
 
   const fetchPrograms = async () => {
@@ -58,39 +62,65 @@ const Dashboard = () => {
     }
   };
 
-  const fetchCompusBoardStats = () => {
-    axios.get('http://localhost:8090/api/campus/board/stats')
-        .then((response) => {
-          setCompusBoardCount(response.data.totalCount);
-          setLatestCompusTitle(response.data.latestTitle);
-        })
-        .catch((error) => {
-            console.error("교내 공고 데이터 로드 오류:", error);
-        });
+  const fetchCompusBoardStats = async () => {
+    try {
+      const response = await axios.get('http://localhost:8090/api/campus/board/stats', {
+        params: { page: 0, size: 1 },
+      });
+  
+      const totalCount = response.data.totalCount;
+      const latestTitle = response.data.latestTitle || "없음";
+  
+      setCompusBoardCount(totalCount);
+      setLatestCompusTitle(latestTitle);
+    } catch (error) {
+      console.error("교내 공고 데이터 로드 오류:", error);
+    }
   };
 
-  const fetchWorkBoardStats = () => {
-    axios.get('http://localhost:8090/api/work/board/stats')
-        .then((response) => {
-          setWorkBoardCount(response.data.totalCount);
-          setLatestWorkTitle(response.data.latestTitle);
-        })
-        .catch((error) => {
-            console.error("고용24 공고 데이터 로드 오류:", error);
-        });
+  const fetchWorkBoardStats = async () => {
+    try {
+      const response = await axios.get('http://localhost:8090/api/work/board/stats', {
+        params: { page: 0, size: 1 },
+      });
+  
+      const totalCount = response.data.totalCount;
+      const latestTitle = response.data.latestTitle || "없음";
+  
+      setWorkBoardCount(totalCount);
+      setLatestWorkTitle(latestTitle);
+    } catch (error) {
+      console.error("고용24 공고 데이터 로드 오류:", error);
+    }
+  };  
+
+  const fetchUserStats = async () => {
+    try {
+      const response = await axios.get("http://localhost:8090/api/users/stats", {
+        params: { page: 0, size: 1 },
+      });
+  
+      const totalCount = response.data.totalCount;
+      const latestUser = response.data.latestUser || "없음";
+  
+      setUserCount(totalCount);
+      setLatestUser(latestUser);
+    } catch (error) {
+      console.error("유저 데이터 로드 오류:", error);
+    }
   };
 
   // 이 데이터는 실제 구현에서는 API를 통해 가져와야 합니다
   const stats = {
-    totalUsers: 1500,
+    totalUsers: userCount,
     activeJobs: SuggestBoardCount + CompusBoardCount + WorkBoardCount,
     activePrograms: totalPrograms,
   }
 
   const recentActivities = [
-    { id: 1, type: "user", name: "김철수", date: "2023-05-20" },
-    { id: 2, type: "job", name: "소프트웨어 개발자", date: "2023-05-19" },
-    { id: 3, type: "program", name: latestProgramName, date: "2023-05-18" },
+    { id: 1, type: "user", name: latestUser },
+    { id: 2, type: "job", name: latestSuggestTitle },
+    { id: 3, type: "program", name: latestProgramName },
   ]
 
   const monthlyData = [
@@ -129,7 +159,7 @@ const Dashboard = () => {
                 {activity.type === "user" && "새 사용자: "}
                 {activity.type === "job" && "새 채용 공고: "}
                 {activity.type === "program" && "새 프로그램: "}
-                {activity.name} ({activity.date})
+                {activity.name}
               </li>
             ))}
           </ul>

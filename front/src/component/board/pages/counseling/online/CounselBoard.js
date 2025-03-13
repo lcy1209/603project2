@@ -17,7 +17,7 @@ const CounselBoard = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
     const [sortOrder, setSortOrder] = useState('desc');
-    const { isName } = useContext(LoginContext);
+    const { isName, isLoginId } = useContext(LoginContext);
 
     const itemsPerPage = 10;
 
@@ -65,7 +65,7 @@ const CounselBoard = () => {
     const handlePostClick = (post) => {
 
         // 관리자이거나 작성자인 경우에만 접근 가능
-        if (isAdmin || post.author === isName) {
+        if (isAdmin || post.authorId === isLoginId) {
             navigate(`/counsel/online/detail/${post.id}`);
         } else {
             alert('작성자만 열람할 수 있습니다.');

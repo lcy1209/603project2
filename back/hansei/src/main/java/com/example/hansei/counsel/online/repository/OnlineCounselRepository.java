@@ -1,5 +1,7 @@
 package com.example.hansei.counsel.online.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,5 +27,7 @@ public interface OnlineCounselRepository extends JpaRepository<OnlineCounsel, Lo
     	@Param("keyword") String keyword, 
         Pageable pageable
     );
+	
+	List<OnlineCounsel> findByAuthorId(String authorId);
 
 }

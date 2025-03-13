@@ -62,7 +62,7 @@ const Counsel = () => {
 
     // 페이지네이션 적용 
     const totalPages = useMemo(() => {
-        return currentData.length > 0 ? Math.ceil(currentData.length / ITEMS_PER_PAGE) : 1;
+        return Math.max(1, Math.ceil(currentData.length / ITEMS_PER_PAGE)); // ✅ 최소 1 보장
     }, [currentData]);
 
     // 검색어나 필터 변경 시 첫 페이지로 이동
@@ -70,9 +70,18 @@ const Counsel = () => {
         setCurrentPage(1);
     }, [searchQuery, sortOption]);
 
+    // totalPages가 1보다 작아지면 1페이지로 강제 이동
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(1);
+        }
+    }, [totalPages]);
+
+    // 페이지네이션 데이터 slice 처리
     const paginatedData = useMemo(() => {
         const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-        return currentData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        return currentData.slice(startIndex, endIndex);
     }, [currentData, currentPage]);
 
     // 검색어 입력 핸들러
@@ -178,64 +187,50 @@ const Counsel = () => {
                                         </thead>
 
                                         <tbody>
-                                            {/* {paginatedData. */}
-                                            {currentData.slice((currentPage - 1) * ITEMS_PER_PAGE,
-                                                currentPage * ITEMS_PER_PAGE).map((item) => (
-                                                    <tr key={item.id}
-                                                        className={removingItems.includes(item.id) ? "fade-out-right" : ""}
-                                                        style={{
-                                                            cursor: "pointer",
-                                                            textAlign: "center",
-                                                            backgroundColor: selectedItems.includes(item.id) ? "" : "transparent"
-                                                        }}
-                                                        onClick={() => toggleSelectItem(item.id)} //  행을 클릭하면 체크박스도 선택
-                                                    >
+                                            {currentData.map((item, index) => (
+                                                <tr key={item.id}
+                                                    className={removingItems.includes(item.id) ? "fade-out-right" : ""}
+                                                    style={{
+                                                        cursor: "pointer",
+                                                        textAlign: "center",
+                                                        backgroundColor: selectedItems.includes(item.id) ? "" : "transparent"
+                                                    }}
+                                                    onClick={() => toggleSelectItem(item.id)} //  행을 클릭하면 체크박스도 선택
+                                                >
 
-                                                        {/* 검색 중이 아닐 때만 체크박스 표시 */}
-                                                        {!searchQuery.trim() && (
+                                                    {/* 검색 중이 아닐 때만 체크박스 표시 */}
+                                                    {!searchQuery.trim() && (
                                                         <td className="mycounsel-checkbox-container"
                                                             onClick={(e) => e.stopPropagation()}>
                                                             <input
                                                                 type="checkbox"
                                                                 id={`checkbox-${item.id}`}
                                                                 checked={selectedItems.includes(item.id)}
-                                                                 onChange={() => toggleSelectItem(item.id)}
+                                                                onChange={() => toggleSelectItem(item.id)}
                                                             />
                                                             <label htmlFor={`checkbox-${item.id}`} className="mycounsel-checkbox-label"></label>
                                                         </td>
-                                                        )}
-                                                        <td>{item.id}</td>
-                                                        <td>{new Date(item.createdDate).toLocaleDateString()}</td>
-                                                        <td><span className='common-board-title'
-                                                            onClick={() => handlePostClick(item)}>
-                                                            {item.title}
-                                                        </span>
-                                                        </td>
-                                                        <td className={item.answer ? "answer-text" : ""}>
-                                                            {item.answer ? "답변 완료" : "미완료"}
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                    )}
+                                                    <td>
+                                                        {(currentData.length - ((currentPage - 1) * ITEMS_PER_PAGE)) - index}
+                                                    </td>
+                                                    <td>{new Date(item.createdDate).toLocaleDateString()}</td>
+                                                    <td><span className='common-board-title'
+                                                        onClick={() => handlePostClick(item)}>
+                                                        {item.title}
+                                                    </span>
+                                                    </td>
+                                                    <td className={item.answer ? "answer-text" : ""}>
+                                                        {item.answer ? "답변 완료" : "미완료"}
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 )}
 
-                                {/* 삭제 버튼 */}
-                                {showTabs && !searchQuery.trim() && (
-                                    <div className="mycounsel-tabs-container">
-
-                                        {/* 검색 중이 아닐 때만 삭제 버튼 표시 */}
-                                        {!searchQuery.trim() && selectedItems.length > 0 && removingItems.length === 0 && (
-                                            <div className="mycounsel-delete-controls">
-                                                <button className="mycounsel-delete-btn" onClick={handleDeleteSelected}>삭제</button>
-                                            </div>
-                                        )}
-
-                                    </div>
-                                )}
-
                                 {/* 검색 결과가 없을 때 페이지네이션 숨김 */}
-                                {paginatedData.length > 0 && totalPages > 1 && (
+                                {totalPages > 0 && (
                                     <div className="mycounsel-pagination">
                                         {Array.from({ length: totalPages }, (_, i) => (
                                             <button
@@ -246,11 +241,25 @@ const Counsel = () => {
                                                 {i + 1}
                                             </button>
                                         ))}
+
+                                        {/* 삭제 버튼 */}
+                                {showTabs && !searchQuery.trim() && (
+                                       <div className="mycounsel-delete-controls">
+                                        {!searchQuery.trim() && selectedItems.length > 0 && removingItems.length === 0 && (
+                                                <button className="mycounsel-delete-btn" 
+                                                        onClick={handleDeleteSelected}>
+                                                        삭제
+                                                </button>
+                                                 )}
+                                            </div>
+                                       
+                                )}
                                     </div>
                                 )}
+
+                                
                             </>
                         )}
-
                     </section>
                 </main>
             </div>

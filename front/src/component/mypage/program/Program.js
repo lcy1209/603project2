@@ -5,6 +5,7 @@ import { AlertCircle } from "lucide-react";
 import * as lucideReact from "lucide-react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { Client } from "@stomp/stompjs";
 
 axios.defaults.baseURL = "http://localhost:8090";
 
@@ -18,6 +19,32 @@ const Program = () => {
     const itemsPerPage = 10;
     const [userId, setUserId] = useState(null); // 로그인한 사용자 ID 저장
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const stompClient = new Client({
+            brokerURL: "ws://localhost:8090/ws",
+            onConnect: () => {
+                stompClient.subscribe("/topic/favorites", (message) => {
+                    const updatedProgramId = JSON.parse(message.body);
+
+                    // 즐겨찾기 상태를 업데이트 (각 페이지의 상태 변경 로직 반영 필요)
+                    setFavoritePrograms((prevPrograms) =>
+                        prevPrograms.map((program) =>
+                            program.id === updatedProgramId ? { ...program, isFavorite: !program.isFavorite } : program
+                        )
+                    );
+
+                    setFavoritePrograms((prevFavorites) =>
+                        prevFavorites.filter((program) => program.programId !== updatedProgramId)
+                    );
+                });
+            },
+        });
+
+        stompClient.activate();
+
+        return () => stompClient.deactivate();
+    }, []);
 
     // 로그인한 사용자 ID 가져오기 (JWT 인증)
     const fetchUserId = useCallback(async () => {
@@ -57,9 +84,20 @@ const Program = () => {
 
     useEffect(() => {
         fetchUserId().then((id) => {
-            if (id) fetchFavoritePrograms(id);
+            if (id) {
+                console.log("✅ 정상적으로 가져온 userId:", id);
+
+                if (favoritePrograms.length === 0) {
+                    console.log("🔄 fetchFavoritePrograms 실행");
+                    fetchFavoritePrograms(id);
+                } else {
+                    console.log("🛑 fetchFavoritePrograms 실행 안 함 (이미 데이터 있음)");
+                }
+            } else {
+                console.error("❌ userId가 설정되지 않았습니다.");
+            }
         });
-    }, [fetchUserId]); // 이제 의존성 배열을 넣어도 문제가 없음!
+    }, []); // `favoritePrograms` 제거하여 무한 렌더링 방지
 
     // 즐겨찾기 목록 가져오기
     const fetchFavoritePrograms = async (userId) => {
@@ -80,16 +118,37 @@ const Program = () => {
             console.log("📌 즐겨찾기 API 응답 상태:", response.status);
             console.log("📌 즐겨찾기 API 응답 데이터:", response.data);
 
-            setFavoritePrograms(response.data);
+            // 기존 favoritePrograms와 비교, 그리고 빈 배열일 경우 업데이트 안 함
+            if (response.data.length > 0 && JSON.stringify(response.data) !== JSON.stringify(favoritePrograms)) {
+                console.log("상태 업데이트 실행");
+                setFavoritePrograms(response.data);
+            } else {
+                console.log("상태 업데이트 안 함 (중복 또는 빈 배열)");
+            }
         } catch (error) {
-
+            console.error("즐겨찾기 API 호출 오류:", error);
             if (error.response?.status === 401) {
-                alert("🚨 로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
-                localStorage.removeItem("accessToken");  // 만료된 토큰 제거
+                alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+                localStorage.removeItem("accessToken");
                 navigate("/login");
             }
         }
     };
+
+    useEffect(() => {
+        const syncFavorites = () => {
+            setFavoritePrograms((prevFavorites) =>
+                prevFavorites.map((program) => ({
+                    ...program,
+                    isFavorite: JSON.parse(localStorage.getItem(`favorite_${program.programId}`) ?? "false"),
+                }))
+            );
+        };
+
+        window.addEventListener("storage", syncFavorites);
+
+        return () => window.removeEventListener("storage", syncFavorites);
+    }, []);
 
     // 검색 필터 적용
     const filteredPrograms = useMemo(() => {
@@ -99,7 +158,7 @@ const Program = () => {
 
         return favoritePrograms.filter(program =>
             program.programName.toLowerCase().includes(lowerCaseQuery) ||
-            (program.category?.toLowerCase() || "").includes(lowerCaseQuery) // 🛠️ category 예외 처리
+            (program.category?.toLowerCase() || "").includes(lowerCaseQuery)
         );
     }, [searchQuery, favoritePrograms]);
 
@@ -111,43 +170,53 @@ const Program = () => {
     // 검색 결과에도 페이지네이션 적용
     const paginatedPrograms = useMemo(() => {
         if (!filteredPrograms || filteredPrograms.length === 0) return [];
-    
+
         // 마감일 기준 정렬
         const sortedData = [...filteredPrograms].sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
-    
+
         // 현재 페이지의 데이터 슬라이싱
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         return sortedData.slice(startIndex, endIndex); // 페이지별 데이터 슬라이싱
     }, [filteredPrograms, currentPage]);
-    
+
     // 전체 페이지 수 계산
     const totalPages = useMemo(() => {
         return Math.ceil(filteredPrograms.length / itemsPerPage); // 전체 페이지 수 계산
     }, [filteredPrograms]);
 
-    // 즐겨찾기 토글 기능
-    const toggleFavorite = async (programId) => {
+    // 즐겨찾기 해제 기능
+    const removeFavorite = async (programId) => {
         try {
-            await axios.post("/api/favorites/toggle", { userId, programId });
+            console.log(`삭제 요청: programId=${programId}`);
 
-            console.log(`📌 즐겨찾기 토글됨: programId=${programId}`);
+            // 애니메이션 효과 적용
+            setRemovingItems((prev) => [...prev, programId]);
 
-            setRemovingItems((prev) => [...prev, Number(programId)]); // 🛠️ Number 변환
+            const response = await axios.delete("/api/favorites/remove", {
+                params: { userId, programId },
+            });
 
-            setTimeout(() => {
-                setFavoritePrograms((prevFavorites) =>
-                    prevFavorites.some(({ programId: id }) => Number(id) === Number(programId))
-                        ? prevFavorites.filter(({ programId: id }) => Number(id) !== Number(programId))
-                        : [...prevFavorites, { programId: Number(programId) }]
-                );
+            if (response.status === 200) {
+                console.log(`즐겨찾기 해제 성공: programId=${programId}`);
 
-                setRemovingItems((prev) => prev.filter((id) => Number(id) !== Number(programId))); // 🛠️ Number 변환
-            }, 500);
-
-            fetchFavoritePrograms(userId);
+                // 애니메이션 후에 상태 업데이트
+                setTimeout(() => {
+                    setFavoritePrograms((prevFavorites) =>
+                        prevFavorites.filter((program) => program.programId !== programId) // 특정 ID만 삭제
+                    );
+                    setRemovingItems((prev) => prev.filter((id) => id !== programId)); // 애니메이션 상태 제거
+                }, 500);
+            } else {
+                console.error("🚨 즐겨찾기 해제 실패: 서버 응답 오류");
+            }
         } catch (error) {
-            console.error("❌ 즐겨찾기 토글 실패", error);
+            console.error("❌ 즐겨찾기 해제 실패", error);
+            if (error.response?.status === 401) {
+                alert("🚨 로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+                localStorage.removeItem("accessToken");  // 만료된 토큰 제거
+                navigate("/login");
+            }
         }
     };
 
@@ -199,10 +268,10 @@ const Program = () => {
         return `D-${diff}`;
     };
 
-     // 프로그램 상세보기 페이지 이동
-  const handleViewDetails = (programId) => {
-    navigate(`/programs/${programId}`); // 해당 프로그램 ID로 상세보기 페이지 이동
-  };
+    // 프로그램 상세보기 페이지 이동
+    const handleViewDetails = (programId) => {
+        navigate(`/programs/${programId}`); // 해당 프로그램 ID로 상세보기 페이지 이동
+    };
 
     return (
         <div className="myprogram-container">
@@ -213,7 +282,7 @@ const Program = () => {
                     <div className="myprogram-division-line"></div>
 
                     {/* 검색바 */}
-                    
+
                     <div className="search-container">
                         {/* 검색어 입력 */}
                         <input
@@ -226,7 +295,7 @@ const Program = () => {
                         {/* 검색 아이콘 */}
                         <lucideReact.Search className="search-icon" />
                     </div >
-            
+
                     <table className="myprogram-table">
                         {paginatedPrograms.length > 0 && (
                             <thead>
@@ -258,7 +327,7 @@ const Program = () => {
                                         {!searchQuery && (
                                             <td>
                                                 <span className="myprogram-star"
-                                                    onClick={() => toggleFavorite(program.id)}
+                                                    onClick={() => removeFavorite(program.programId)}
                                                     style={{ cursor: 'pointer', textAlign: 'center', verticalAlign: 'middle' }}>
                                                     ⭐
                                                 </span>
@@ -271,10 +340,9 @@ const Program = () => {
                                         </td>
                                         <td>{program.maxParticipants}명</td>
                                         <td><span style={{ color: 'rgb(52, 31, 167)', fontWeight: 'bold', textAlign: 'center' }}>
-                                                 {getDDay(program.endDate)}</span><br />
+                                            {getDDay(program.endDate)}</span><br />
                                             <span style={{ fontSize: '13px', marginTop: '5px' }}>마감일: {program.endDate}</span>
                                         </td>
-
                                     </tr>
                                 ))
                             )}
@@ -295,11 +363,11 @@ const Program = () => {
                             ))}
                         </div>
                     )}
+
                 </section>
             </main>
         </div >
     );
 };
-
 
 export default Program; 

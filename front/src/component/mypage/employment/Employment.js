@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './Employment.css';
 import Sidebar from '../page/Sidebar';
-import { Search, AlertCircle } from "lucide-react"; // 🔍 돋보기 + ❗ 경고 아이콘 추가
+import { Search, AlertCircle } from "lucide-react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import * as lucideReact from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 const Employment = () => {
-    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("tab1");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [removingItems, setRemovingItems] = useState([]);
-    const [searchQuery, setSearchQuery] = useState(""); // ✅ 검색어 상태 추가
-    const [filteredData, setFilteredData] = useState([]); // ✅ 검색된 데이터 저장
+    const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
+    const [filteredData, setFilteredData] = useState([]); // 검색된 데이터 저장
+    const navigate = useNavigate();
 
+    const [searchOption, setSearchOption] = useState(() => {
+            // sessionStorage에서 검색 옵션을 불러옵니다.
+            const savedOptions = sessionStorage.getItem("searchOptions");
+            return savedOptions ? JSON.parse(savedOptions) : {
+                startDate: "",
+                endDate: "",
+                region: "",
+                searchQuery: "",
+            };
+        });
 
+    // 각 탭에 15개씩 데이터 추가 (페이지네이션 확인 가능)
     const [jobData, setJobData] = useState({
         tab1: [], tab2: [], tab3: [],
     });
@@ -40,11 +51,9 @@ const Employment = () => {
                         updatedJobData[tab] = filteredData;
                     }
                 });
-
                 return dataChanged ? updatedJobData : prevJobData;
             });
         };
-
         removeExpiredJobs(); // 처음 렌더링될 때 한 번 실행
         const interval = setInterval(removeExpiredJobs, 24 * 60 * 60 * 1000); // 24시간마다 실행
 
@@ -73,10 +82,27 @@ const Employment = () => {
         return sortedData.slice(startIndex, endIndex);
     };
 
-    const totalItems = searchQuery.trim() ? filteredData.length : jobData[activeTab]?.length || 0;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    // 값이 있는 첫 번째 탭을 자동으로 선택
+    useEffect(() => {
+        const firstNonEmptyTab = Object.keys(jobData).find(tab => jobData[tab].length > 0);
+        if (firstNonEmptyTab) {
+            setActiveTab(firstNonEmptyTab);
+        }
+    }, [jobData]);
 
-    // ⭐ 즐겨찾기 해제 시 즉시 삭제 + 현재 페이지가 비면 이전 페이지로 이동 + 탭 유지
+    const totalItems = searchQuery.trim()
+        ? filteredData.length
+        : Object.values(jobData).reduce((acc, tabData) => acc + tabData.length, 0);
+
+    const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage)); // 최소 1페이지 유지
+
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(totalPages > 0 ? totalPages : 1);
+        }
+    }, [totalPages, currentPage]);
+
+    //  즐겨찾기 해제 시 즉시 삭제 + 현재 페이지가 비면 이전 페이지로 이동 + 탭 유지
     const toggleFavorite = (jobId) => {
         setRemovingItems((prev) => [...prev, jobId]);
 
@@ -85,15 +111,14 @@ const Employment = () => {
                 const updatedData = prevJobData[activeTab].filter((job) => job.id !== jobId);
                 const updatedJobData = { ...prevJobData, [activeTab]: updatedData };
 
-                // 🔥 삭제 후 최신 데이터 확인
+                // 삭제 후 최신 데이터 확인
                 const sortedItems = sortByDeadline(updatedJobData[activeTab] || []);
                 const remainingItemsOnPage = sortedItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-                // 🔥 현재 페이지가 비었고, 이전 페이지가 있으면 이전 페이지로 이동
+                // 페이지가 비었고, 이전 페이지가 있으면 이전 페이지로 이동
                 if (remainingItemsOnPage.length === 0 && currentPage > 1) {
                     setCurrentPage((prev) => Math.max(prev - 1, 1));
                 }
-
                 return updatedJobData;
             });
 
@@ -101,7 +126,7 @@ const Employment = () => {
         }, 500);
     };
 
-    // ⭐ 즐겨찾기 해제 시 즉시 삭제 + 현재 페이지가 비면 이전 페이지로 이동 + 탭 유지
+    // 즐겨찾기 해제 시 즉시 삭제 + 현재 페이지가 비면 이전 페이지로 이동 + 탭 유지
     const toggleCpFavorite = (jobId) => {
         setRemovingItems((prev) => [...prev, jobId]);
 
@@ -110,15 +135,14 @@ const Employment = () => {
                 const updatedData = prevJobData[activeTab].filter((job) => job.id !== jobId);
                 const updatedJobData = { ...prevJobData, [activeTab]: updatedData };
 
-                // 🔥 삭제 후 최신 데이터 확인
+                // 삭제 후 최신 데이터 확인
                 const sortedItems = sortByDeadline(updatedJobData[activeTab] || []);
                 const remainingItemsOnPage = sortedItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-                // 🔥 현재 페이지가 비었고, 이전 페이지가 있으면 이전 페이지로 이동
+                // 현재 페이지가 비었고, 이전 페이지가 있으면 이전 페이지로 이동
                 if (remainingItemsOnPage.length === 0 && currentPage > 1) {
                     setCurrentPage((prev) => Math.max(prev - 1, 1));
                 }
-
                 return updatedJobData;
             });
 
@@ -133,62 +157,35 @@ const Employment = () => {
         }
     };
 
+    // useEffect를 사용하여 activeTab이 변경될 때만 1페이지로 리셋
+    useEffect(() => {
+        if (currentPage !== 1) {  // 현재 페이지가 1이 아닐 때만 변경
+            setCurrentPage(1);
+        }
+    }, [activeTab]);  // activeTab 변경 시 실행
+
     // 검색어 입력 처리 및 검색 후 데이터 저장
     const handleSearch = (event) => {
         const query = event.target.value.toLowerCase();
         setSearchQuery(query);
-
+    
         if (query.trim() === "") {
-            // ✅ 검색어가 없을 때 → 기존 activeTab 데이터 사용
-            setFilteredData([]);
+            setFilteredData([]); // 검색어가 없으면 원래 데이터 유지
         } else {
-            // ✅ 검색어가 있을 때 → 모든 탭의 데이터에서 검색
-            const allData = Object.values(jobData).flat();
-            const results = allData.filter((job) =>
-                job.company.toLowerCase().includes(query) ||
-                job.details.toLowerCase().includes(query) ||
-                job.education.toLowerCase().includes(query)
-            );
-
-            setFilteredData(results); // ✅ 검색된 데이터 저장
+            const tabData = jobData[activeTab] || [];
+            const results = tabData.filter((job) => {
+                return (
+                    job.title?.toLowerCase().includes(query) || // `?.` 사용하여 undefined 방지
+                    job.writerName?.toLowerCase().includes(query) ||
+                    job.regTime?.toLowerCase().includes(query)
+                );
+            });
+            setFilteredData(results);
         }
-
-        setCurrentPage(1); // ✅ 검색 시 첫 번째 페이지로 이동
+        setCurrentPage(1); // 검색 시 첫 번째 페이지로 이동
     };
 
-
-    // 추천 채용 즐겨찾기
-    const [favorites, setFavorites] = useState([]);
-
-    useEffect(() => {
-        axios.get("http://localhost:8090/api/favorites/my-favorites", {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        })
-            .then((response) => {
-                setFavorites(response.data);
-
-                // ✅ 추천 채용 (`tab2`)에 즐겨찾기 목록 추가
-                setJobData((prevJobData) => ({
-                    ...prevJobData,
-                    tab2: response.data.map((job) => ({
-                        id: job.id,
-                        title: job.title,
-                        regTime: job.regTime,
-                        writerName: job.writerName,
-                        count: job.count,
-                        isFavorite: true, // ⭐ 즐겨찾기 상태
-                    }))
-                }));
-            })
-            .catch((error) => {
-                console.error("즐겨찾기 목록을 불러오는 중 오류 발생:", error);
-            });
-    }, []);
-
-
-    // 교내 채용 즐겨찾기
+    // 교내 채용 ('tab1') 즐겨찾기
     const [cpFavorites, setCpFavorites] = useState([]);
 
     useEffect(() => {
@@ -200,7 +197,7 @@ const Employment = () => {
             .then((response) => {
                 setCpFavorites(response.data);
 
-                // ✅ 교내 채용 (`tab1`)에 즐겨찾기 목록 추가
+                // 교내 채용 (`tab1`)에 즐겨찾기 목록 추가
                 setJobData((prevJobData) => ({
                     ...prevJobData,
                     tab1: response.data.map((job) => ({
@@ -209,7 +206,7 @@ const Employment = () => {
                         writerName: job.writerName,
                         regTime: job.regTime,
                         count: job.count,
-                        isFavorite: true, // ⭐ 즐겨찾기 상태
+                        isFavorite: true, // 즐겨찾기 상태
                     }))
                 }));
             })
@@ -218,12 +215,39 @@ const Employment = () => {
             });
     }, []);
 
-    // 외부 채용 즐겨찾기
+    // 추천 채용 ('tab2') 즐겨찾기
+    const [favorites, setFavorites] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8090/api/favorites/my-favorites", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        })
+            .then((response) => {
+                setFavorites(response.data);
+
+                // 추천 채용 (`tab2`)에 즐겨찾기 목록 추가
+                setJobData((prevJobData) => ({
+                    ...prevJobData,
+                    tab2: response.data.map((job) => ({
+                        id: job.id,
+                        title: job.title,
+                        regTime: job.regTime,
+                        writerName: job.writerName,
+                        count: job.count,
+                        isFavorite: true, // 즐겨찾기 상태
+                    }))
+                }));
+            })
+            .catch((error) => {
+                console.error("즐겨찾기 목록을 불러오는 중 오류 발생:", error);
+            });
+    }, []);
+
+    // 외부 채용 ('tab3') 즐겨찾기
     const [eventFavorites, setEventFavorites] = useState([]);
 
-
-    // ✅ 외부 채용 (tab3) 데이터 가져오기
-    // 📌 외부 채용 즐겨찾기 목록 가져오기
     useEffect(() => {
         axios.get("http://localhost:8090/api/work-favorites", {
             headers: {
@@ -251,11 +275,7 @@ const Employment = () => {
             });
     }, []);
 
-
-
-
-
-    // ✅ 외부 채용 즐겨찾기 추가/삭제 함수
+    // 즐겨찾기 추가/삭제 함수
     const toggleEventFavorite = (eventId) => {
         setRemovingItems((prev) => [...prev, eventId]);
 
@@ -264,23 +284,34 @@ const Employment = () => {
                 const updatedData = prevJobData[activeTab].filter((job) => job.id !== eventId);
                 const updatedJobData = { ...prevJobData, [activeTab]: updatedData };
 
-                // 🔥 삭제 후 최신 데이터 확인
+                // 삭제 후 최신 데이터 확인
                 const sortedItems = sortByDeadline(updatedJobData[activeTab] || []);
                 const remainingItemsOnPage = sortedItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-                // 🔥 현재 페이지가 비었고, 이전 페이지가 있으면 이전 페이지로 이동
+                // 현재 페이지가 비었고, 이전 페이지가 있으면 이전 페이지로 이동
                 if (remainingItemsOnPage.length === 0 && currentPage > 1) {
                     setCurrentPage((prev) => Math.max(prev - 1, 1));
                 }
 
                 return updatedJobData;
             });
-
             setRemovingItems((prev) => prev.filter((id) => id !== eventId));
         }, 500);
     };
-    // 추천 게시글 상세 페이지 이동
-    const onDetail = (suggestBoard) => {
+
+    // 교내 채용 ('tab1') 상세페이지 이동 
+    const onDetail = (board) => {
+        axios.put(`http://localhost:8090/api/campus/board/${board.id}/count`) // 조회수 증가
+            .then(() => {
+                navigate(`/campus_board/CampusBoardDetail/${board.id}`); // 수정된 경로
+            })
+            .catch((error) => {
+                console.error("조회수 증가 중 오류 발생:", error);
+            });
+    };
+
+     // 교내 채용 ('tab2') 상세페이지 이동 
+    const onDetail2 = (suggestBoard) => {
         axios.put(`http://localhost:8090/api/suggest/board/${suggestBoard.id}/count`)
             .then(() => {
                 navigate(`/suggest_board/SuggestBoarddetail/${suggestBoard.id}`, { state: { ...suggestBoard } }); // 수정된 경로
@@ -290,15 +321,15 @@ const Employment = () => {
             });
     };
 
-    // 교내 게시글 상세 페이지 이동
-    const onDetail2 = (board) => {
-        axios.put(`http://localhost:8090/api/campus/board/${board.id}/count`) // 조회수 증가
-            .then(() => {
-                navigate(`/campus_board/CampusBoardDetail/${board.id}`); // 수정된 경로
-            })
-            .catch((error) => {
-                console.error("조회수 증가 중 오류 발생:", error);
-            });
+    const onDetail3 = (workBoard) => {
+        const eventNo = workBoard.eventNo; // workBoard에서 eventNo 가져오기
+        const areaCd = workBoard.areaCd;
+
+        // 현재 검색 옵션을 sessionStorage에 저장
+        sessionStorage.setItem("searchOptions", JSON.stringify(searchOption));
+
+        console.log("🔍 eventNo:", eventNo, "areaCd:", areaCd);
+        navigate(`/work_board/WorkBoardDetail/${eventNo}?areaCd=${areaCd}`); // URL 파라미터로 eventNo 전달
     };
 
     return (
@@ -405,7 +436,7 @@ const Employment = () => {
                                                     </span>
                                                 </td>
                                                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                                                <td>{job.title}</td>
+                                                <td onClick={() => onDetail2(job)}>{job.title}</td>
                                                 <td>{job.regTime?.split('T')[0]}</td>
                                                 <td>{job.count}</td>
                                             </tr>
@@ -440,7 +471,7 @@ const Employment = () => {
                                                     </span>
                                                 </td>
                                                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                                                <td>{job.title}</td>
+                                                <td onClick={() => onDetail3(job)}>{job.title}</td>
                                                 <td>{job.startDate} ~ {job.endDate}</td>
                                                 <td>{job.area}</td>
                                             </tr>

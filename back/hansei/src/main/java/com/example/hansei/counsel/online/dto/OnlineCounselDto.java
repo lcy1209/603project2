@@ -13,6 +13,7 @@ public class OnlineCounselDto {
     private String title;
     private String content;
     private String author;
+    private String authorId;
     private LocalDateTime createdDate;
     private String answer;
     private String answerer;

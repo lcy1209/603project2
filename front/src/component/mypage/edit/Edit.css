@@ -27,7 +27,7 @@ body.myedit-page {
 }
 
 .myedit-form-container h2 {
-    font-size: 30px;
+    font-size: 40px;
     margin-bottom: 20px;
     color: #333;
     font-weight: bold;
@@ -47,7 +47,7 @@ body.myedit-page {
 
 .myedit-form-container label {
     font-size: 20px;
-    margin-bottom: 5px;
+    margin-bottom: auto;
     font-weight: bold;
     color: #333;
 }
@@ -58,6 +58,7 @@ body.myedit-page {
     border: 1px solid #ddd;
     border-radius: 10px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 0;
 }
 
 .myedit-form-container input:focus {

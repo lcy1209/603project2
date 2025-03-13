@@ -23,6 +23,7 @@ public class OnlineCounsel {
     private String title;
     private String content;
     private String author;
+    private String authorId;
     
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;

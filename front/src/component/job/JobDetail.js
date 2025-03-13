@@ -28,9 +28,7 @@ const JobDetail = () => {
   const [showMoreSummary, setShowMoreSummary] = useState(false);
   const [userId, setUserId] = useState(null); // ✅ 로그인한 사용자 ID 저장
 
-  /**
-   * ✅ 로그인한 사용자 ID 가져오기
-   */
+  // 로그인한 사용자 ID 가져오기
   const fetchUserId = async () => {
     const token = localStorage.getItem("accessToken"); // ✅ 수정: accessToken으로 가져옴
 
@@ -74,9 +72,23 @@ const JobDetail = () => {
     }
   };
 
-  /**
-   * ✅ 프로그램 상세 정보 가져오기
-   */
+   // 서버에서 즐겨찾기 상태 블러오기 (새로고침 유지)
+   const fetchFavoriteStatus = async (id) => {
+    if (!id) return; // userId가 없으면 실행 안 함
+
+    try {
+      const response = await fetch(`http://localhost:8090/api/favorites/list?userId=${userId}`);
+      if (!response.ok) throw new Error("즐겨찾기 데이터를 불러오지 못했습니다.");
+  
+      const favorites = await response.json();
+      const isFav = favorites.some((fav) => fav.programId === Number(programId));
+      setIsFavorited(isFav); //  즐겨찾기 상태 업데이트
+    } catch (error) {
+      console.error("🚨 즐겨찾기 상태 로드 오류:", error);
+    }
+  };
+
+  // 프로그램 상세 정보 가져오기
   const fetchProgramDetail = async (userId) => {
     try {
       const response = await fetch(`http://localhost:8090/api/programs/${programId}`);
@@ -84,7 +96,7 @@ const JobDetail = () => {
       const data = await response.json();
       setProgram(data);
 
-      // ✅ 신청 여부 확인
+      //  신청 여부 확인
       if (data.applicants?.includes(userId)) {
         setIsApplied(true);
       }
@@ -93,25 +105,45 @@ const JobDetail = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUserId().then((id) => {
-      if (id) fetchProgramDetail(id);
-    });
+ // userId가 있을 때만 API 호출
+   useEffect(() => {
+      const initialize = async () => {
+      const id = await fetchUserId();
+      if (id) {
+        setUserId(id);
+        fetchProgramDetail(id);
+        fetchFavoriteStatus(id); // userId 전달
+      }
+    };
+    initialize();
+  }, [programId]); // programId가 변경될 때만 실행
 
-    // ✅ 로그인한 사용자만 WebSocket 연결
-    if (!userId) return;
+      //  로그인한 사용자만 WebSocket 연결
+      useEffect(() => {
+      if (!userId) return;
 
-    // ✅ STOMP WebSocket 연결
+      //  STOMP WebSocket 연결
     const stompClient = new Client({
       brokerURL: "ws://localhost:8090/ws",
       reconnectDelay: 5000,
       onConnect: () => {
+
+        // 기존 프로그램 정보 업데이트 구독 
         stompClient.subscribe("/topic/programs", (message) => {
           const updatedProgram = JSON.parse(message.body);
           if (updatedProgram.id === Number(programId)) {
             setProgram(updatedProgram);
           }
         });
+
+        // 즐겨찾기 정보 업데이트 구독 
+      stompClient.subscribe("/topic/favorites", (message) => {
+        const updatedProgramId = JSON.parse(message.body);
+
+        if (updatedProgramId === Number(programId)) {
+          setIsFavorited((prev) => !prev); // 현재 페이지에서 즐겨찾기 상태 업데이트
+        }
+      });
       },
       onStompError: (frame) => {
         console.error("🚨 STOMP 오류:", frame);
@@ -123,7 +155,7 @@ const JobDetail = () => {
     return () => {
       stompClient.deactivate();
     };
-  }, [programId, userId]); // ✅ WebSocket 연결 시 userId 체크
+  }, [programId, userId]); // WebSocket 연결 시 userId 체크
 
   const getFormattedDate = (dateString) => {
     const date = new Date(dateString);
@@ -142,9 +174,7 @@ const JobDetail = () => {
     );
   };
 
-    /**
-   * ✅ 프로그램 신청 기능 (JWT 인증 적용)
-   */
+    //프로그램 신청 기능 (JWT 인증 적용)
     const handleApply = async () => {
     if (!userId) {
       alert("⚠ 로그인이 필요합니다.");
@@ -157,7 +187,7 @@ const JobDetail = () => {
     }
 
     try {
-      const token = localStorage.getItem("accessToken"); // ✅ 수정
+      const token = localStorage.getItem("accessToken");
 
       const response = await fetch(`http://localhost:8090/api/programs/applications/${programId}/apply`, {
         method: "POST",
@@ -165,7 +195,7 @@ const JobDetail = () => {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId }), // ✅ userId 추가
+        body: JSON.stringify({ userId }), // userId 추가
       });
 
       if (!response.ok) {
@@ -183,7 +213,6 @@ const JobDetail = () => {
     }
   };
 
-
   // 링크 복사 기능
 const handleCopyLink = () => {
   const programUrl = window.location.href;
@@ -200,7 +229,7 @@ const shareOnKakao = () => {
   }
 
   if (!window.Kakao.isInitialized()) {
-    window.Kakao.init("c475a908f7e0e67cdde41a0d8767639d"); // ✅ 여기에 본인의 카카오 JavaScript 키 입력
+    window.Kakao.init("c475a908f7e0e67cdde41a0d8767639d"); // 여기에 본인의 카카오 JavaScript 키 입력
   }
 
   window.Kakao.Link.sendDefault({
@@ -216,7 +245,6 @@ const shareOnKakao = () => {
     }
   });
 };
-
 
 useEffect(() => {
   // localStorage에서 최신 즐겨찾기 상태 불러오기
@@ -258,6 +286,19 @@ const toggleFavorite = async () => {
   // 모든 곳에서 반영되도록 이벤트 발생
   window.dispatchEvent(new Event("storage"));
 };
+
+useEffect(() => {
+  const syncFavoriteStatus = () => {
+    const savedFavorite = JSON.parse(localStorage.getItem(`favorite_${programId}`)) || false;
+    setIsFavorited(savedFavorite);
+  };
+
+  window.addEventListener("storage", syncFavoriteStatus);
+
+  return () => window.removeEventListener("storage", syncFavoriteStatus);
+}, [programId]);
+
+
 
 const toggleShowMoreSummary = () => {
   setShowMoreSummary(!showMoreSummary);

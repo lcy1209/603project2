@@ -38,20 +38,20 @@ public class OfflineCounselService {
 
     // 본인의 일정 조회
     @Transactional(readOnly = true)
-    public List<OfflineCounselDto> getSchedulesByCounselor(String counselor) {
-        return offlineCounselRepository.findByCounselor(counselor).stream()
+    public List<OfflineCounselDto> getSchedulesByCounselorId(String counselorId) {
+        return offlineCounselRepository.findByCounselorId(counselorId).stream()
                 .map(schedule -> modelMapper.map(schedule, OfflineCounselDto.class))
                 .collect(Collectors.toList());
     }
 
     // 일정 삭제
     @Transactional
-    public void deleteSchedule(Long id, String counselor) {
+    public void deleteSchedule(Long id, String counselorId) {
         OfflineCounsel counsel = offlineCounselRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("일정을 찾을 수 없습니다."));
 
         // 본인의 일정인지 확인
-        if (!counsel.getCounselor().equals(counselor)) {
+        if (!counsel.getCounselorId().equals(counselorId)) {
             throw new IllegalArgumentException("본인이 등록한 일정만 삭제 가능합니다.");
         }
 

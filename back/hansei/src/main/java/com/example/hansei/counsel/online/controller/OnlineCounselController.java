@@ -1,5 +1,6 @@
 package com.example.hansei.counsel.online.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,12 @@ public class OnlineCounselController {
         counselService.deleteCounsel(id);
         return ResponseEntity.ok().build();
     }
+    
+    @GetMapping("/myCounsel")
+    public ResponseEntity<List<OnlineCounselDto>> getMyCounsels(@RequestParam String authorId) {
+        return ResponseEntity.ok(counselService.getMyCounsels(authorId));
+    }
+  
     
     /*-----------------------------------------답 변-----------------------------------------*/
 

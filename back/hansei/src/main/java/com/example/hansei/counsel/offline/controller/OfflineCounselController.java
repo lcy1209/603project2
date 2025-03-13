@@ -44,14 +44,14 @@ public class OfflineCounselController {
 
     // 본인의 일정 조회
     @GetMapping("/schedule/manage")
-    public List<OfflineCounselDto> getMySchedules(@RequestParam String counselor) {
-        return offlineCounselService.getSchedulesByCounselor(counselor);
+    public List<OfflineCounselDto> getMySchedules(@RequestParam String counselorId) {
+        return offlineCounselService.getSchedulesByCounselorId(counselorId);
     }
 
     // 일정 삭제
     @DeleteMapping("/schedule/{id}")
-    public ResponseEntity<String> deleteSchedule(@PathVariable Long id, @RequestParam String counselor) {
-        offlineCounselService.deleteSchedule(id, counselor);
+    public ResponseEntity<String> deleteSchedule(@PathVariable Long id, @RequestParam String counselorId) {
+        offlineCounselService.deleteSchedule(id, counselorId);
         return ResponseEntity.ok("일정이 삭제되었습니다.");
     }
     

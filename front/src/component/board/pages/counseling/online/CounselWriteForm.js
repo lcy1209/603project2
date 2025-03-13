@@ -11,8 +11,9 @@ const CounselWriteForm = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
+    const [authorId, setAuthorId] = useState('');
     const [createdDate, setCreatedDate] = useState('');
-    const { isName } = useContext(LoginContext);
+    const { isName, isLoginId } = useContext(LoginContext);
 
     const isEdit = !!id;
 
@@ -25,6 +26,7 @@ const CounselWriteForm = () => {
                     setTitle(counsel.title);
                     setContent(counsel.content);
                     setAuthor(counsel.author);
+                    setAuthorId(counsel.authorId)
                     setCreatedDate(counsel.createdDate);
                 } catch (error) {
                     console.error('Error fetching counsel:', error);
@@ -33,6 +35,7 @@ const CounselWriteForm = () => {
             fetchCounsel();
         } else {
             setAuthor(isName);
+            setAuthorId(isLoginId);
         }
     }, [isEdit, id]);
 
@@ -53,6 +56,7 @@ const CounselWriteForm = () => {
             title,
             content,
             author,
+            authorId,
             createdDate
         };
 

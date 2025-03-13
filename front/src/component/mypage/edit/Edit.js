@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../login/security/apis/api'; // API 호출 모듈
+import api from '../../login/security/apis/api'; 
 import './Edit.css';
 import Sidebar from '../page/Sidebar';
 
@@ -35,11 +35,8 @@ const PersonInfoEdit = () => {
         console.error('사용자 정보 가져오기 실패:', error);
       }
     };
-  
     fetchUserInfo();
   }, []);
-  
-  
   
   // 전화번호 포맷팅
   const handlePhoneChange = (e) => {
@@ -51,7 +48,6 @@ const PersonInfoEdit = () => {
     } else if (input.length > 7) {
       formattedPhone = `${input.slice(0, 3)}-${input.slice(3, 7)}-${input.slice(7, 11)}`;
     }
-
     setUserInfo((prev) => ({ ...prev, phone: formattedPhone }));
   };
 
@@ -59,14 +55,14 @@ const PersonInfoEdit = () => {
   const handleUpdate = async () => {
     setLoading(true);
 
-    // ✅ 현재 비밀번호를 입력하지 않으면 경고창 띄우기
+    // 현재 비밀번호를 입력하지 않으면 경고창 띄우기
     if (!currentPassword) {
       alert('현재 비밀번호를 입력해주세요.');
       setLoading(false);
       return;
     }
 
-    // ✅ 현재 비밀번호와 새 비밀번호가 같으면 경고창 띄우기
+    // 현재 비밀번호와 새 비밀번호가 같으면 경고창 띄우기
     if (currentPassword === newPassword) {
       alert('현재 비밀번호와 새 비밀번호가 동일합니다.');
       setLoading(false);
@@ -75,7 +71,7 @@ const PersonInfoEdit = () => {
 
     try {
 
-      // ✅ 현재 비밀번호 확인 요청 (실패 시 예외 발생)
+      // 현재 비밀번호 확인 요청 (실패 시 예외 발생)
       await api.post('/users/verify-password', { password: currentPassword });
 
       // 회원정보 수정
@@ -116,15 +112,16 @@ const PersonInfoEdit = () => {
     }
   };
   
-
   return (
     <div>
       <div className="myedit-container">
         <main className='myedit-main'>
           <Sidebar />
+
           <section className="myedit-form-container">
             <h2>개인정보 수정</h2>
             <div className="myedit-division-line"></div>
+            
             <form onSubmit={handleSubmit}>
               <label htmlFor="loginid">아이디</label>
               <input type="text" id="loginid" value={userInfo.loginid} disabled />

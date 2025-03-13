@@ -6,7 +6,7 @@ import { LoginContext } from "../../../../login/security/contexts/LoginContextPr
 
 const ScheduleManage = () => {
     const [schedules, setSchedules] = useState([]);
-    const { isName } = useContext(LoginContext);
+    const { isLoginId } = useContext(LoginContext);
 
     useEffect(() => {
         fetchSchedules();
@@ -16,7 +16,7 @@ const ScheduleManage = () => {
         try {
             const response = await axios.get(`${SERVER_URL}/api/counsel/schedule/manage`,
                 {
-                    params: { counselor: isName } // 서버에 상담사 이름 전달
+                    params: { counselorId: isLoginId } // 서버에 상담사 이름 전달
                 }
             );
 
@@ -38,7 +38,7 @@ const ScheduleManage = () => {
             try {
                 await axios.delete(`${SERVER_URL}/api/counsel/schedule/${scheduleId}`,
                     {
-                        params: { counselor: isName } // 서버에 상담사 이름 전달
+                        params: { counselorId: isLoginId } // 서버에 상담사 이름 전달
                     });
                 fetchSchedules();
             } catch (error) {

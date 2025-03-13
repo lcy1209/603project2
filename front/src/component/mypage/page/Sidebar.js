@@ -32,7 +32,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <NavLink to="/myCounsel" className={location.pathname.startsWith("/myCounsel") ? "active" : ""}>
-                        나의 최근 상담
+                        나의 온라인 상담
                     </NavLink>
                 </li>
             </ul>

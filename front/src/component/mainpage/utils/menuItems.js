@@ -38,9 +38,9 @@ export const menuItems = [
       title: "마이페이지",
       submenu: [
         { title: "회원 정보", link: "/myEdit" },
-        { title: "나의 채용 정보", link: "/myEmployment" },
-        { title: "나의 취업 프로그램", link: "/myProgram" },
-        { title: "나의 최근 상담", link: "/myCounsel" }
+        { title: "내가 신청한 프로그램", link: "/myProgram" },
+        { title: "즐겨찾기", link: "/myEmployment" },
+        { title: "상담 결과 조회", link: "/myCounsel" }
       ]
     },
   ]
