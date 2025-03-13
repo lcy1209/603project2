@@ -51,7 +51,6 @@
     position: fixed; /* 고정 위치 */
     top: 250px; /* 상단에서의 위치 */
     left: 50px; /* 좌측에서의 위치 */
-    width: 220px; /* 고정된 너비 */
     border-radius: 10px; /* 모서리 둥글게 */
     overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능 */
 }

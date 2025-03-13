@@ -7,7 +7,7 @@ import "../MainPage/RecruitmentSidebar.css";
 
 function RecruitmentSidebar() {
     return (
-        <div className="col-md-3 recruitment-sidebar-fixed">
+        <div className="recruitment-sidebar-fixed">
             <div className="recruitment-sidebar">
                 <h4>빠른 이동</h4>
                 <ul className="list-unstyled">

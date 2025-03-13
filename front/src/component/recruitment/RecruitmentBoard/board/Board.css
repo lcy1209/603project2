@@ -379,10 +379,6 @@
     display: flex; /* 사이드바와 게시판을 나란히 배치 */
 }
 
-.recruitment-sidebar-fixed {
-    width: 250px; /* 사이드바의 고정 너비 */
-}
-
 .board-content-area {
     flex-grow: 1; /* 남은 공간을 차지 */
     padding: 20px; /* 여백 추가 */
